@@ -380,3 +380,37 @@
         min-height: 44px; /* Apple's recommended minimum touch size */
     }
 }
+
+/* --- Protocol 002-B: Header Stabilization --- */
+
+/* Target the main header container */
+header {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center everything */
+    padding-bottom: 20px;
+    gap: 15px;              /* Add space between stacked items */
+}
+
+/* Adjust the navigation links */
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the links */
+    gap: 20px;               /* Space out "Dashboard" and "Vault" */
+    margin-bottom: 10px;
+}
+
+/* Fix the logo size if needed */
+.logo {
+    margin-bottom: 10px;
+    font-size: 24px; /* Slightly smaller for mobile */
+}
+
+/* Ensure the Cart doesn't get squashed */
+.cart-widget {
+    position: relative; /* Reset position if it was absolute */
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #333; /* Visual separator */
+    padding-top: 10px;
+}
