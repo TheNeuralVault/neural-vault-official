@@ -1,211 +1,269 @@
 :root {
-    --bg: #050505;
-    --text: #ffffff;
-    --glass: rgba(255, 255, 255, 0.05);
-    --border: rgba(255, 255, 255, 0.1);
-    --accent: #00f2ff; /* Cyber Cyan */
-    --font-head: 'Space Grotesk', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    /* --- THE PALETTE --- */
+    --void-bg: #030304;
+    --void-deep: #000000;
+    
+    /* The "Cyber Cyan" - High energy */
+    --neon-main: #00f3ff;
+    --neon-dim: rgba(0, 243, 255, 0.1);
+    
+    /* Glass Physics */
+    --glass-surface: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
+    
+    /* Typography */
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-tech: 'Inter', system-ui, sans-serif;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* --- SYSTEM RESET --- */
+* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
 
 body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    /* Allow scrolling now */
-    overflow-x: hidden; 
+    margin: 0;
+    padding: 0;
+    background-color: var(--void-bg);
+    /* Creates a subtle vignette spotlight in the center */
+    background-image: radial-gradient(circle at 50% 0%, #1a1a20 0%, var(--void-bg) 60%);
+    color: #ffffff;
+    font-family: var(--font-tech);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
-/* --- 2. NAVIGATION --- */
+/* Custom Selection Color */
+::selection { background: var(--neon-main); color: #000; }
+
+/* --- 1. HUD NAVIGATION --- */
 .glass-nav {
-    position: fixed; top: 0; width: 100%;
-    padding: 20px;
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    display: flex; justify-content: center;
-    z-index: 1000;
-}
-
-.brand { font-family: var(--font-head); font-weight: 700; letter-spacing: 2px; }
-.dot { color: var(--accent); }
-
-/* --- 3. HERO SECTION --- */
-.hero {
-    min-height: 100vh; /* Full screen height */
+    position: fixed; top: 0; left: 0; width: 100%;
+    height: 70px;
     display: flex; align-items: center; justify-content: center;
-    text-align: center;
-    position: relative;
-    padding: 20px;
+    background: rgba(3, 3, 4, 0.7);
+    backdrop-filter: blur(12px); /* Heavy frost effect */
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 999;
 }
 
+.brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.dot { color: var(--neon-main); display: inline-block; animation: blink 4s infinite; }
+
+/* --- 2. CINEMATIC HERO SECTION --- */
+.hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* The ambient glow behind the text */
 .glow-bg {
     position: absolute;
-    width: 300px; height: 300px;
-    background: var(--accent);
-    filter: blur(150px);
-    opacity: 0.15;
+    top: 20%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw; height: 60vw;
+    background: var(--neon-main);
+    filter: blur(180px);
+    opacity: 0.08;
     z-index: -1;
+    pointer-events: none;
+}
+
+/* System Status Pill */
+.status-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+    backdrop-filter: blur(5px);
+}
+
+.pulse {
+    width: 6px; height: 6px;
+    background-color: var(--neon-main);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-main);
+    animation: heartbeat 2s infinite ease-in-out;
 }
 
 h1 {
-    font-family: var(--font-head);
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    line-height: 1.1;
-    margin-bottom: 20px;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, #fff, #888);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 6rem); /* Responsive sizing */
+    line-height: 1.0;
+    margin: 0 0 25px 0;
+    letter-spacing: -0.03em;
+    /* Chrome Text Effect */
+    background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .subtext {
-    color: #888;
-    max-width: 400px;
-    margin: 0 auto 40px;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    color: #889;
+    max-width: 450px;
+    line-height: 1.6;
+    margin: 0 auto 50px;
+    font-weight: 300;
 }
 
-.status-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    background: var(--glass);
-}
-
-.pulse {
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent);
-}
-
+/* --- 3. THE HOLOGRAPHIC INTERFACE (Button) --- */
 .btn-main {
-    text-decoration: none;
-    background: var(--text);
-    color: var(--bg);
-    padding: 15px 30px;
-    font-weight: 600;
-    border-radius: 4px;
-    font-family: var(--font-head);
+    position: relative;
     display: inline-block;
+    padding: 1.2rem 3.5rem;
+    color: var(--neon-main);
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    background: rgba(0, 243, 255, 0.03);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* --- 4. ARTIFACT GRID (THE NEW PART) --- */
+/* The "Scanline" sweep animation on hover */
+.btn-main::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.2), transparent);
+    transition: 0.4s;
+}
+
+.btn-main:hover {
+    background: rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.25);
+    border-color: var(--neon-main);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.btn-main:hover::before { left: 100%; }
+
+/* --- 4. THE ARTIFACT GRID (Advanced) --- */
 .grid-section {
-    padding: 80px 20px;
-    background: #08080a;
+    padding: 100px 20px;
+    background: #050505;
+    position: relative;
+}
+
+/* Subtle top border for section */
+.grid-section::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
 }
 
 .section-title {
-    text-align: center;
-    font-family: var(--font-head);
+    font-family: var(--font-display);
     font-size: 2rem;
-    margin-bottom: 40px;
+    text-align: center;
+    margin-bottom: 60px;
 }
 
-.highlight { color: var(--accent); }
+.highlight { color: var(--neon-main); }
 
 .artifact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Card Physics */
+/* THE CARD ENGINE */
 .card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    padding: 30px;
-    border-radius: 8px;
-    
-    /* Animation Start State */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    background: var(--glass-surface);
+    border: 1px solid var(--glass-border);
+    padding: 40px 30px;
+    border-radius: 4px; /* Slightly sharp corners for tech feel */
+    position: relative;
+    transition: all 0.4s ease;
+    /* JS Animation Start State */
+    opacity: 0; transform: translateY(30px);
 }
 
-/* Animation End State (Triggered by JS) */
-.card.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
+.card.visible { opacity: 1; transform: translateY(0); }
 
 .card:hover {
-    border-color: var(--accent);
     background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+}
+
+.icon {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    display: inline-block;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
 }
 
 .card h3 {
-    margin: 15px 0 10px;
-    font-family: var(--font-head);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #fff;
 }
 
 .card p {
-    color: #888;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+    color: #999;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
 }
 
-.icon { font-size: 2rem; }
-
+/* Card Button */
 .btn-sm {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 8px 16px;
-    cursor: pointer;
-    font-family: var(--font-head);
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
     width: 100%;
-    transition: 0.2s;
+    padding: 12px 0;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn-sm:hover {
-    background: var(--accent);
+    background: #fff;
     color: #000;
-    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
 }
 
-
-/* --- HOLOGRAPHIC BUTTON OVERRIDE --- */
-.cta-button {
-    background: rgba(0, 255, 242, 0.05) !important;
-    border: 1px solid var(--neon-cyan) !important;
-    color: var(--neon-cyan) !important;
-    box-shadow: 0 0 10px rgba(0, 255, 242, 0.1);
-    backdrop-filter: blur(5px);
+/* --- ANIMATIONS --- */
+@keyframes heartbeat {
+    0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
 }
 
-.cta-button:hover {
-    background: var(--neon-cyan) !important;
-    color: #000 !important;
-    box-shadow: 0 0 30px rgba(0, 255, 242, 0.6);
-    transform: translateY(-2px);
-}
-
-
-/* ANIMATION FOR THE SYSTEM STATUS DOT */
-@keyframes pulse {
-    0% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 242, 0.7); }
-    70% { opacity: 1; box-shadow: 0 0 0 10px rgba(0, 255, 242, 0); }
-    100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 242, 0); }
-}
-
-.status-indicator::before {
-    /* This targets the little dot */
-    animation: pulse 2s infinite;
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
