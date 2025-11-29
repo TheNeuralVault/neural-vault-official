@@ -1,269 +1,352 @@
-:root {
-    /* --- THE PALETTE --- */
-    --void-bg: #030304;
-    --void-deep: #000000;
+/* ==================================================================
+   NEURAL VAULT: THE LIVING SKIN
+   Architecture: Biological Layers (Ceramides) + Fashion (Accessories)
+   ================================================================== */
+
+/* 1. LAYER ARCHITECTURE
+   Sealing the barrier to prevent style leakage. */
+@layer reset, tokens, base, layout, components, utilities;
+
+
+/* ==================================================================
+   LAYER: TOKENS (The DNA & Melanin)
+   Defining the genetic makeup of the interface.
+   ================================================================== */
+@layer tokens {
+  :root {
+    /* MELANIN (Theme/Tone) - Titanium Dark Mode */
+    --color-void: #050505;       /* Deepest background */
+    --color-surface: #141416;    /* Card background */
+    --color-surface-hover: #1f1f22;
     
-    /* The "Cyber Cyan" - High energy */
-    --neon-main: #00f3ff;
-    --neon-dim: rgba(0, 243, 255, 0.1);
+    /* ACCENTS (The Jewelry Pallette) */
+    --color-text-pri: #f0f0f0;   /* High visibility */
+    --color-text-sec: #a0a0a0;   /* Subtitles */
+    --color-accent: #00e0ff;     /* Cyan "Oxygen" flow */
+    --color-gold: #ffd700;       /* Premium status */
+    --color-danger: #ff2a2a;     /* Critical alerts */
+    --color-success: #00ff66;    /* Transaction verified */
+
+    /* COLLAGEN (Spacing/Structure) */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+
+    /* ELASTIN (Motion/Resilience - The Perfume) */
+    --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
     
-    /* Glass Physics */
-    --glass-surface: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-highlight: rgba(255, 255, 255, 0.15);
-    
-    /* Typography */
-    --font-display: 'Space Grotesk', system-ui, sans-serif;
-    --font-tech: 'Inter', system-ui, sans-serif;
+    /* KERATIN (Borders/Radii) */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --border-subtle: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
 
-/* --- SYSTEM RESET --- */
-* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--void-bg);
-    /* Creates a subtle vignette spotlight in the center */
-    background-image: radial-gradient(circle at 50% 0%, #1a1a20 0%, var(--void-bg) 60%);
-    color: #ffffff;
-    font-family: var(--font-tech);
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+/* ==================================================================
+   LAYER: RESET (Stem Cells)
+   Normalizing the environment.
+   ================================================================== */
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-void);
+    color: var(--color-text-pri);
+    line-height: 1.5;
+    scroll-behavior: smooth; 
+  }
+
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  
+  /* Accessibility: High Contrast Focus */
+  :focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
 }
 
-/* Custom Selection Color */
-::selection { background: var(--neon-main); color: #000; }
 
-/* --- 1. HUD NAVIGATION --- */
-.glass-nav {
-    position: fixed; top: 0; left: 0; width: 100%;
-    height: 70px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(3, 3, 4, 0.7);
-    backdrop-filter: blur(12px); /* Heavy frost effect */
-    border-bottom: 1px solid var(--glass-border);
-    z-index: 999;
-}
+/* ==================================================================
+   LAYER: LAYOUT (The Clothing)
+   Contextual wrappers that fit the body to the device.
+   ================================================================== */
+@layer layout {
+  body { display: flex; flex-direction: column; min-height: 100vh; }
 
-.brand {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-.dot { color: var(--neon-main); display: inline-block; animation: blink 4s infinite; }
-
-/* --- 2. CINEMATIC HERO SECTION --- */
-.hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    text-align: center;
-    padding: 0 20px;
-    position: relative;
-}
-
-/* The ambient glow behind the text */
-.glow-bg {
-    position: absolute;
-    top: 20%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60vw; height: 60vw;
-    background: var(--neon-main);
-    filter: blur(180px);
-    opacity: 0.08;
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* System Status Pill */
-.status-pill {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--glass-border);
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 40px;
-    backdrop-filter: blur(5px);
-}
-
-.pulse {
-    width: 6px; height: 6px;
-    background-color: var(--neon-main);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--neon-main);
-    animation: heartbeat 2s infinite ease-in-out;
-}
-
-h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 6rem); /* Responsive sizing */
-    line-height: 1.0;
-    margin: 0 0 25px 0;
-    letter-spacing: -0.03em;
-    /* Chrome Text Effect */
-    background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtext {
-    font-size: 1.1rem;
-    color: #889;
-    max-width: 450px;
-    line-height: 1.6;
-    margin: 0 auto 50px;
-    font-weight: 300;
-}
-
-/* --- 3. THE HOLOGRAPHIC INTERFACE (Button) --- */
-.btn-main {
-    position: relative;
-    display: inline-block;
-    padding: 1.2rem 3.5rem;
-    color: var(--neon-main);
-    font-family: var(--font-display);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    background: rgba(0, 243, 255, 0.03);
-    border: 1px solid rgba(0, 243, 255, 0.3);
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-/* The "Scanline" sweep animation on hover */
-.btn-main::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.2), transparent);
-    transition: 0.4s;
-}
-
-.btn-main:hover {
-    background: rgba(0, 243, 255, 0.1);
-    box-shadow: 0 0 30px rgba(0, 243, 255, 0.25);
-    border-color: var(--neon-main);
-    transform: translateY(-2px);
-    color: #fff;
-}
-
-.btn-main:hover::before { left: 100%; }
-
-/* --- 4. THE ARTIFACT GRID (Advanced) --- */
-.grid-section {
-    padding: 100px 20px;
-    background: #050505;
-    position: relative;
-}
-
-/* Subtle top border for section */
-.grid-section::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
-}
-
-.section-title {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.highlight { color: var(--neon-main); }
-
-.artifact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+  /* The Main Body Suit */
+  main {
+    flex: 1;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: var(--space-lg) var(--space-sm);
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* The Footer (Shoes/Foundation) */
+  .foundation-anchor {
+    text-align: center;
+    padding: var(--space-md);
+    color: var(--color-text-sec);
+    border-top: var(--border-subtle);
+    font-size: 0.875rem;
+    background: linear-gradient(to top, #000, transparent);
+  }
+
+  /* Responsive Tailoring */
+  @media (min-width: 768px) {
+    main { grid-template-columns: repeat(12, 1fr); gap: var(--space-md); }
+    .garment-wrapper { grid-column: 1 / -1; }
+    .metric-card { grid-column: span 4; }
+  }
+  
+  @media (max-width: 767px) {
+    main { display: flex; flex-direction: column; }
+  }
 }
 
-/* THE CARD ENGINE */
-.card {
-    background: var(--glass-surface);
-    border: 1px solid var(--glass-border);
-    padding: 40px 30px;
-    border-radius: 4px; /* Slightly sharp corners for tech feel */
+
+/* ==================================================================
+   LAYER: COMPONENTS (The Organs)
+   Functional units: Headers, Cards, Terminals.
+   ================================================================== */
+@layer components {
+  /* --- NAVIGATION (Titanium Header) --- */
+  .titanium-header {
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(12px); /* Frosted glass effect */
+    border-bottom: var(--border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-inner nav ul { display: flex; gap: var(--space-md); list-style: none; }
+  .header-inner a { text-decoration: none; color: var(--color-text-sec); font-size: 0.9rem; transition: color 0.2s; }
+  .header-inner a:hover { color: var(--color-accent); }
+  .brand-logo { font-weight: 900; letter-spacing: 2px; color: var(--color-text-pri) !important; }
+
+  /* --- METRIC CARDS (Data Cells) --- */
+  .metric-card {
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
     position: relative;
-    transition: all 0.4s ease;
-    /* JS Animation Start State */
-    opacity: 0; transform: translateY(30px);
-}
+    overflow: hidden;
+  }
 
-.card.visible { opacity: 1; transform: translateY(0); }
+  .metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-pri);
+    margin: var(--space-sm) 0;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .metric-value span { font-size: 1rem; color: var(--color-text-sec); margin-left: 4px; }
+  
+  progress {
+    width: 100%; height: 4px;
+    background: #333; border-radius: 2px;
+    overflow: hidden;
+  }
+  progress::-webkit-progress-value { background: var(--color-accent); }
 
-.card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
-}
+  /* --- PRODUCT SHELVES (The Vault) --- */
+  .vault-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
 
-.icon {
-    font-size: 2rem;
-    margin-bottom: 25px;
-    display: inline-block;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-}
+  .product-card {
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 
-.card h3 {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: #fff;
-}
+  /* The Abstract Art Container */
+  .product-visual {
+    height: 180px;
+    background: radial-gradient(circle at center, #1a1a1e, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: var(--border-subtle);
+  }
 
-.card p {
-    color: #999;
-    line-height: 1.6;
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-}
+  .product-orb {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: #222;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+  }
+  /* Rarity Colors */
+  .legendary .product-orb { background: #ffaa00; box-shadow: 0 0 50px rgba(255, 170, 0, 0.3); }
+  .epic .product-orb { background: #00e0ff; box-shadow: 0 0 50px rgba(0, 224, 255, 0.3); }
+  .rare .product-orb { background: #00ff66; box-shadow: 0 0 50px rgba(0, 255, 102, 0.3); }
 
-/* Card Button */
-.btn-sm {
-    width: 100%;
-    padding: 12px 0;
-    background: transparent;
-    border: 1px solid var(--glass-border);
-    color: #fff;
-    font-family: var(--font-display);
+  .product-info { padding: var(--space-md); flex: 1; display: flex; flex-direction: column; }
+  .product-desc { font-size: 0.85rem; color: var(--color-text-sec); margin: var(--space-sm) 0; flex: 1; line-height: 1.6; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: var(--space-sm); border-top: var(--border-subtle); }
+  .product-price { font-family: monospace; font-weight: 700; color: var(--color-text-pri); }
+
+  /* --- BUTTONS (Action Modules) --- */
+  .btn-titanium {
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 0.6rem 1.2rem;
     font-size: 0.8rem;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.2s var(--ease-smooth);
+  }
+  
+  .btn-titanium:hover {
+    background: var(--color-accent);
+    color: var(--color-void);
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.5); /* The Glow */
+  }
+  
+  .btn-titanium:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+  .btn-sm { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+  .btn-text { color: var(--color-text-sec); font-size: 0.75rem; text-decoration: underline; margin-top: 1rem; }
+
+  /* --- SECURE CHECKOUT TERMINAL --- */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none; /* Toggled by JS */
+    place-items: center;
+  }
+
+  .checkout-terminal {
+    background: var(--color-surface);
+    border: 1px solid var(--color-accent);
+    width: 90%; max-width: 450px;
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    position: relative;
+    box-shadow: 0 0 60px rgba(0, 224, 255, 0.1);
+  }
+
+  /* The Stripe Input Field Container */
+  .stripe-input-field {
+    background: #0a0a0c;
+    border: 1px solid #333;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 1rem;
+    transition: border 0.2s;
+  }
+  .stripe-input-field:focus-within { border-color: var(--color-accent); }
 }
 
-.btn-sm:hover {
-    background: #fff;
-    color: #000;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
-}
 
-/* --- ANIMATIONS --- */
-@keyframes heartbeat {
-    0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
-}
+/* ==================================================================
+   LAYER: UTILITIES (Jewelry & Perfume)
+   The Accessories: Glows, Motions, and Auras.
+   ================================================================== */
+@layer utilities {
+  /* JEWELRY: Text Treatments */
+  .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-sec);
+    font-weight: 600;
+  }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #fff 0%, var(--color-text-sec) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  
+  .accent-text { color: var(--color-accent); }
+
+  /* JEWELRY: High Value Borders & Glows */
+  .jewelry-accent {
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 0 1px var(--color-accent), 
+                0 0 25px rgba(0, 224, 255, 0.2);
+    z-index: 1;
+  }
+
+  /* JEWELRY: Status Indicators */
+  .secure-badge {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    border-radius: 20px;
+    margin-bottom: var(--space-md);
+    letter-spacing: 1px;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background-color: var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--color-success);
+    margin-right: 8px;
+  }
+
+  /* PERFUME: Motion & Aura */
+  .scent-hover {
+    transition: transform var(--duration-fast, 200ms) var(--ease-smooth);
+  }
+  .scent-hover:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.1);
+  }
+
+  .aura-pulse { animation: heartbeat 3s infinite ease-in-out; }
+  
+  @keyframes heartbeat {
+    0% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.5; transform: scale(1); }
+  }
+
+  /* ACCESSORY: The Scanner Animation */
+  .scan-line {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--color-accent);
+    box-shadow: 0 0 15px var(--color-accent);
+    animation: scan 2.5s ease-in-out infinite;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
 }
