@@ -44,6 +44,7 @@
 
         nav { display: flex; gap: 20px; }
         nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; }
+        
         .cart-btn {
             background: transparent;
             border: 1px solid var(--neon-blue);
@@ -69,7 +70,7 @@
         .preview-grid {
             padding: 20px;
             display: grid;
-            grid-template-columns: 1fr; /* Stack on mobile */
+            grid-template-columns: 1fr;
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
@@ -82,7 +83,6 @@
             background: #000;
         }
 
-        /* The Visual "Mini Website" inside the card */
         .mockup-window {
             height: 150px;
             position: relative;
@@ -93,26 +93,18 @@
             font-family: sans-serif;
         }
 
-        /* Style 1: NEURAL */
         .style-neural { background: #111; color: #00f3ff; border-bottom: 2px solid #00f3ff; }
         .style-neural::after { content: "System_Online"; font-family: 'Courier New'; }
-
-        /* Style 2: AERO */
         .style-aero { background: #f0f0f0; color: #333; border-bottom: 2px solid #ccc; }
         .style-aero::after { content: "Clean Design"; letter-spacing: -1px; }
-
-        /* Style 3: FLUX */
         .style-flux { background: linear-gradient(45deg, #bc13fe, #00f3ff); color: #fff; }
         .style-flux::after { content: "CREATIVE MODE"; font-style: italic; }
 
-        .template-info {
-            padding: 15px;
-            text-align: center;
-        }
+        .template-info { padding: 15px; text-align: center; }
         .template-info h3 { margin: 0 0 5px 0; color: #fff; }
         .template-info p { color: #888; font-size: 0.8rem; margin-bottom: 15px; }
 
-        /* --- PRODUCT GRID --- */
+        /* --- PRODUCT GRID (OTHER SERVICES) --- */
         .container {
             padding: 20px;
             max-width: 1200px;
@@ -128,14 +120,24 @@
             border-radius: 8px;
             text-align: center;
         }
+        
+        /* --- PAYMENT LINK STYLES --- */
         .buy-btn {
+            display: block;           /* Fills the width */
+            text-align: center;       /* Centers text */
+            text-decoration: none;    /* Removes underline */
             background-color: var(--neon-blue);
             color: #000;
             border: none;
             padding: 15px;
-            width: 100%;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;       /* Slight rounded corners */
+        }
+        .buy-btn:hover {
+            opacity: 0.9;             /* Slight fade on hover */
         }
 
         /* --- DESKTOP --- */
@@ -151,10 +153,10 @@
     <header>
         <div class="logo">NEURAL<span>_VAULT</span></div>
         <nav>
-            <a href="#">Services</a>
-            <a href="#">Templates</a>
+            <a href="#templates">Templates</a>
+            <a href="#services">Services</a>
         </nav>
-        <button class="cart-btn" id="cartButton">CART (0)</button>
+        <a href="mailto:your_email@example.com?subject=Inquiry" class="cart-btn">CONTACT AGENT</a>
     </header>
 
     <div style="text-align:center; padding: 40px 20px;">
@@ -162,7 +164,7 @@
         <p style="color:#888;">Select your protocol. We build the rest.</p>
     </div>
 
-    <div class="section-title">AVAILABLE STYLES</div>
+    <div class="section-title" id="templates">AVAILABLE STYLES</div>
     
     <div class="preview-grid">
         <div class="template-card">
@@ -170,7 +172,7 @@
             <div class="template-info">
                 <h3>THE NEURAL</h3>
                 <p>Dark mode. Terminal aesthetics. For data, crypto, and tech.</p>
-                <button class="buy-btn" onclick="addToCart('Template: NEURAL', 499)">SELECT BLUEPRINT</button>
+                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
             </div>
         </div>
 
@@ -179,7 +181,7 @@
             <div class="template-info">
                 <h3>THE AERO</h3>
                 <p>Minimalist white. Sans-serif typography. For business & portfolios.</p>
-                <button class="buy-btn" onclick="addToCart('Template: AERO', 499)">SELECT BLUEPRINT</button>
+                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
             </div>
         </div>
 
@@ -188,38 +190,30 @@
             <div class="template-info">
                 <h3>THE FLUX</h3>
                 <p>High gradient. Bold visuals. For creators and artists.</p>
-                <button class="buy-btn" onclick="addToCart('Template: FLUX', 499)">SELECT BLUEPRINT</button>
+                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
             </div>
         </div>
     </div>
 
-    <div class="section-title">SUPPORT SERVICES</div>
+    <div class="section-title" id="services">SUPPORT SERVICES</div>
 
     <div class="container">
         <div class="card">
             <h3>System Integrity</h3>
             <p style="color:#888;">Monthly hosting & updates.</p>
             <span style="display:block; margin:10px; font-size:1.2rem;">$49.00 / mo</span>
-            <button class="buy-btn" onclick="addToCart('System Integrity', 49)">SUBSCRIBE</button>
+            <a href="mailto:your_email@example.com?subject=Inquiry: System Integrity" class="buy-btn" style="background-color: #333; color: #fff;">INQUIRE</a>
         </div>
         
         <div class="card">
             <h3>Consultation</h3>
             <p style="color:#888;">1-on-1 Strategy Call.</p>
             <span style="display:block; margin:10px; font-size:1.2rem;">$150.00 / hr</span>
-            <button class="buy-btn" onclick="addToCart('Consultation', 150)">BOOK TIME</button>
+            <a href="mailto:your_email@example.com?subject=Inquiry: Architect Consultation" class="buy-btn" style="background-color: #333; color: #fff;">BOOK TIME</a>
         </div>
+
+        <div class="card" style="visibility: hidden;"></div>
     </div>
 
-    <script>
-        let cartCount = 0;
-        let cartTotal = 0;
-        function addToCart(productName, price) {
-            cartCount++;
-            cartTotal += price;
-            document.getElementById('cartButton').innerText = `CART (${cartCount}) - $${cartTotal}`;
-            alert(`[SELECTED] ${productName}\nPrice: $${price}`);
-        }
-    </script>
-</body>
+    </body>
 </html>
