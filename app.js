@@ -5,7 +5,7 @@
 
 // --- 0. STRIPE CONFIGURATION ---
 // TODO: REPLACE THIS WITH YOUR STRIPE PUBLISHABLE KEY (Starts with pk_test_)
-const STRIPE_KEY = 'pk_test_YOUR_KEY_HERE'; 
+const STRIPE_KEY = 'pk_live_51SOQhwGr5qRM7EIngTZjG8IDWBTeuULInJ8l9JlGV5OA6SjKaLlOPyw69fj4xQ0ehsl4WwxYdT9i1zdcFmVgII8k00Ienbrr1m'; 
 
 // Initialize Stripe
 let stripe;
