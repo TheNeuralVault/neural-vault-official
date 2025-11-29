@@ -1,101 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEURAL VAULT | Official Interface</title>
-  <meta name="description" content="High-security neural interface and commerce vault.">
-  
-  <script src="https://js.stripe.com/v3/"></script>
-  
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAL VAULT | Digital Services</title>
+    <style>
+        /* --- CORE SYSTEM STYLES --- */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #0a0a0a;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+        }
+
+        /* --- HEADER (MOBILE STABLE) --- */
+        header {
+            background-color: #000;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .logo span { color: var(--neon-blue); }
+
+        nav { display: flex; gap: 20px; }
+        nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; }
+        .cart-btn {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 20px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        /* --- SECTIONS --- */
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- TEMPLATE PREVIEW DECK --- */
+        .preview-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr; /* Stack on mobile */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .template-card {
+            border: 1px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* The Visual "Mini Website" inside the card */
+        .mockup-window {
+            height: 150px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        /* Style 1: NEURAL */
+        .style-neural { background: #111; color: #00f3ff; border-bottom: 2px solid #00f3ff; }
+        .style-neural::after { content: "System_Online"; font-family: 'Courier New'; }
+
+        /* Style 2: AERO */
+        .style-aero { background: #f0f0f0; color: #333; border-bottom: 2px solid #ccc; }
+        .style-aero::after { content: "Clean Design"; letter-spacing: -1px; }
+
+        /* Style 3: FLUX */
+        .style-flux { background: linear-gradient(45deg, #bc13fe, #00f3ff); color: #fff; }
+        .style-flux::after { content: "CREATIVE MODE"; font-style: italic; }
+
+        .template-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .template-info h3 { margin: 0 0 5px 0; color: #fff; }
+        .template-info p { color: #888; font-size: 0.8rem; margin-bottom: 15px; }
+
+        /* --- PRODUCT GRID --- */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .buy-btn {
+            background-color: var(--neon-blue);
+            color: #000;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- DESKTOP --- */
+        @media (min-width: 768px) {
+            header { flex-direction: row; justify-content: space-between; }
+            .preview-grid, .container { grid-template-columns: repeat(3, 1fr); }
+            .cart-btn { width: auto; }
+        }
+    </style>
 </head>
 <body>
 
-  <header class="titanium-header">
-    <div class="header-inner">
-      <a href="/" class="brand-logo scent-hover">NEURAL_VAULT</a>
-      
-      <nav>
-        <ul>
-          <li><a href="#dashboard" class="scent-hover">Dashboard</a></li>
-          <li><a href="#vault" class="scent-hover" style="color: var(--color-accent);">The Vault</a></li>
-        </ul>
-      </nav>
+    <header>
+        <div class="logo">NEURAL<span>_VAULT</span></div>
+        <nav>
+            <a href="#">Services</a>
+            <a href="#">Templates</a>
+        </nav>
+        <button class="cart-btn" id="cartButton">CART (0)</button>
+    </header>
 
-      <button id="cart-trigger" class="btn-titanium" onclick="bus.emit({type: 'shop.checkout'})">
-        CART [0]
-      </button>
+    <div style="text-align:center; padding: 40px 20px;">
+        <h1>Architect Your Digital Legacy</h1>
+        <p style="color:#888;">Select your protocol. We build the rest.</p>
     </div>
-  </header>
 
-  <main class="stable-grid">
+    <div class="section-title">AVAILABLE STYLES</div>
     
-    <section class="garment-wrapper full-width">
-      <h1 class="text-gradient-gold">System Overview</h1>
-      <p class="label">
-        <span class="status-dot aura-pulse"></span> Live Connection • Secure
-      </p>
-    </section>
-
-    <article class="metric-card jewelry-accent">
-      <header><h2 class="label">Processing Power</h2></header>
-      <div class="metric-value">98.4<span>%</span></div>
-      <progress value="98" max="100"></progress>
-    </article>
-
-    <article class="metric-card scent-hover">
-      <header><h2 class="label">Encryption</h2></header>
-      <div class="metric-value">AES-256</div>
-    </article>
-
-    <article class="metric-card scent-hover">
-      <header><h2 class="label">Latency</h2></header>
-      <div class="metric-value" id="latency-display">12<span>ms</span></div>
-    </article>
-
-    <section class="garment-wrapper full-width" id="vault" style="margin-top: 4rem;">
-      <header class="section-header">
-        <div>
-          <h2 class="text-gradient-gold">Acquisitions</h2>
-          <p class="label">Restricted Access • Clearance Level 5</p>
+    <div class="preview-grid">
+        <div class="template-card">
+            <div class="mockup-window style-neural"></div>
+            <div class="template-info">
+                <h3>THE NEURAL</h3>
+                <p>Dark mode. Terminal aesthetics. For data, crypto, and tech.</p>
+                <button class="buy-btn" onclick="addToCart('Template: NEURAL', 499)">SELECT BLUEPRINT</button>
+            </div>
         </div>
-        <div class="label accent-text">Authorized</div>
-      </header>
-      
-      <div id="vault-shelves" class="vault-grid"></div>
-    </section>
 
-  </main>
-
-  <footer class="foundation-anchor">
-    <p>&copy; 2025 Neural Vault Official. System Integrity 100%.</p>
-  </footer>
-
-  <div id="checkout-modal" class="modal-overlay">
-    <div class="checkout-terminal">
-      <div class="scan-line"></div>
-      <div class="secure-badge">
-        <span class="status-dot"></span> STRIPE SECURE GATEWAY
-      </div>
-      
-      <h2 class="label">Total Transaction Value</h2>
-      <div id="checkout-total-display" class="checkout-total">$0.00</div>
-      
-      <div id="card-element" class="stripe-input-field">
+        <div class="template-card">
+            <div class="mockup-window style-aero"></div>
+            <div class="template-info">
+                <h3>THE AERO</h3>
+                <p>Minimalist white. Sans-serif typography. For business & portfolios.</p>
+                <button class="buy-btn" onclick="addToCart('Template: AERO', 499)">SELECT BLUEPRINT</button>
+            </div>
         </div>
-      <div id="card-errors" role="alert" style="color: var(--color-danger); margin-top: 1rem; font-size: 0.8rem;"></div>
 
-      <button id="pay-btn" class="btn-titanium full-width" style="margin-top: 1.5rem;">
-        AUTHORIZE PAYMENT
-      </button>
-      
-      <button class="btn-text" onclick="bus.emit({type: 'shop.cancel'})" style="margin-top: 1rem;">
-        ABORT SEQUENCE
-      </button>
+        <div class="template-card">
+            <div class="mockup-window style-flux"></div>
+            <div class="template-info">
+                <h3>THE FLUX</h3>
+                <p>High gradient. Bold visuals. For creators and artists.</p>
+                <button class="buy-btn" onclick="addToCart('Template: FLUX', 499)">SELECT BLUEPRINT</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <div class="section-title">SUPPORT SERVICES</div>
+
+    <div class="container">
+        <div class="card">
+            <h3>System Integrity</h3>
+            <p style="color:#888;">Monthly hosting & updates.</p>
+            <span style="display:block; margin:10px; font-size:1.2rem;">$49.00 / mo</span>
+            <button class="buy-btn" onclick="addToCart('System Integrity', 49)">SUBSCRIBE</button>
+        </div>
+        
+        <div class="card">
+            <h3>Consultation</h3>
+            <p style="color:#888;">1-on-1 Strategy Call.</p>
+            <span style="display:block; margin:10px; font-size:1.2rem;">$150.00 / hr</span>
+            <button class="buy-btn" onclick="addToCart('Consultation', 150)">BOOK TIME</button>
+        </div>
+    </div>
+
+    <script>
+        let cartCount = 0;
+        let cartTotal = 0;
+        function addToCart(productName, price) {
+            cartCount++;
+            cartTotal += price;
+            document.getElementById('cartButton').innerText = `CART (${cartCount}) - $${cartTotal}`;
+            alert(`[SELECTED] ${productName}\nPrice: $${price}`);
+        }
+    </script>
 </body>
 </html>
