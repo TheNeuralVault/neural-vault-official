@@ -3,217 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL VAULT | Digital Services</title>
-    <style>
-        /* --- CORE SYSTEM STYLES --- */
-        :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --dark-bg: #0a0a0a;
-            --card-bg: #111111;
-            --text-main: #ffffff;
-            --text-dim: #888888;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', monospace;
-            background-color: var(--dark-bg);
-            color: var(--text-main);
-        }
-
-        /* --- HEADER (MOBILE STABLE) --- */
-        header {
-            background-color: #000;
-            padding: 20px;
-            border-bottom: 1px solid #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .logo span { color: var(--neon-blue); }
-
-        nav { display: flex; gap: 20px; }
-        nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; }
-        
-        .cart-btn {
-            background: transparent;
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 10px 20px;
-            width: 100%;
-            max-width: 200px;
-        }
-
-        /* --- SECTIONS --- */
-        .section-title {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 1.5rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- TEMPLATE PREVIEW DECK --- */
-        .preview-grid {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .template-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .mockup-window {
-            height: 150px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-family: sans-serif;
-        }
-
-        .style-neural { background: #111; color: #00f3ff; border-bottom: 2px solid #00f3ff; }
-        .style-neural::after { content: "System_Online"; font-family: 'Courier New'; }
-        .style-aero { background: #f0f0f0; color: #333; border-bottom: 2px solid #ccc; }
-        .style-aero::after { content: "Clean Design"; letter-spacing: -1px; }
-        .style-flux { background: linear-gradient(45deg, #bc13fe, #00f3ff); color: #fff; }
-        .style-flux::after { content: "CREATIVE MODE"; font-style: italic; }
-
-        .template-info { padding: 15px; text-align: center; }
-        .template-info h3 { margin: 0 0 5px 0; color: #fff; }
-        .template-info p { color: #888; font-size: 0.8rem; margin-bottom: 15px; }
-
-        /* --- PRODUCT GRID (OTHER SERVICES) --- */
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid #222;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        /* --- PAYMENT LINK STYLES --- */
-        .buy-btn {
-            display: block;           /* Fills the width */
-            text-align: center;       /* Centers text */
-            text-decoration: none;    /* Removes underline */
-            background-color: var(--neon-blue);
-            color: #000;
-            border: none;
-            padding: 15px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 4px;       /* Slight rounded corners */
-        }
-        .buy-btn:hover {
-            opacity: 0.9;             /* Slight fade on hover */
-        }
-
-        /* --- DESKTOP --- */
-        @media (min-width: 768px) {
-            header { flex-direction: row; justify-content: space-between; }
-            .preview-grid, .container { grid-template-columns: repeat(3, 1fr); }
-            .cart-btn { width: auto; }
-        }
-    </style>
+    <title>NEURAL VAULT | The Singularity</title>
+    
+    <!-- FONTS: The Voice -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- ICONS: The Symbology -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- STYLES: The Skin -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo">NEURAL<span>_VAULT</span></div>
-        <nav>
-            <a href="#templates">Templates</a>
-            <a href="#services">Services</a>
+    <!-- THE BRAIN (3D CANVAS) -->
+    <canvas id="neuro-core"></canvas>
+    
+    <!-- THE ATMOSPHERE (Overlay) -->
+    <div class="noise-layer"></div>
+    <div class="vignette-layer"></div>
+    
+    <!-- CURSOR SYSTEM -->
+    <div class="cursor-main"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- UI LAYER -->
+    <header class="hud-header">
+        <div class="brand">
+            <span class="brand-icon">❖</span>
+            NEURAL<span class="pulse">_VAULT</span>
+        </div>
+        <nav class="hud-nav">
+            <a href="#matrix" class="nav-item">MATRIX</a>
+            <a href="#pricing" class="nav-item">ACCESS</a>
         </nav>
-        <a href="mailto:your_email@example.com?subject=Inquiry" class="cart-btn">CONTACT AGENT</a>
+        <a href="mailto:deploy@neuralvault.io" class="action-btn">
+            <span class="btn-text">INITIATE_SEQUENCE</span>
+            <div class="btn-glare"></div>
+        </a>
     </header>
 
-    <div style="text-align:center; padding: 40px 20px;">
-        <h1>Architect Your Digital Legacy</h1>
-        <p style="color:#888;">Select your protocol. We build the rest.</p>
-    </div>
-
-    <div class="section-title" id="templates">AVAILABLE STYLES</div>
-    
-    <div class="preview-grid">
-        <div class="template-card">
-            <div class="mockup-window style-neural"></div>
-            <div class="template-info">
-                <h3>THE NEURAL</h3>
-                <p>Dark mode. Terminal aesthetics. For data, crypto, and tech.</p>
-                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
-            </div>
-        </div>
-
-        <div class="template-card">
-            <div class="mockup-window style-aero"></div>
-            <div class="template-info">
-                <h3>THE AERO</h3>
-                <p>Minimalist white. Sans-serif typography. For business & portfolios.</p>
-                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
-            </div>
-        </div>
-
-        <div class="template-card">
-            <div class="mockup-window style-flux"></div>
-            <div class="template-info">
-                <h3>THE FLUX</h3>
-                <p>High gradient. Bold visuals. For creators and artists.</p>
-                <a href="https://buy.stripe.com/fZu14ncnFadT35S58j8Zq00" class="buy-btn">PURCHASE LICENSE $499</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-title" id="services">SUPPORT SERVICES</div>
-
-    <div class="container">
-        <div class="card">
-            <h3>System Integrity</h3>
-            <p style="color:#888;">Monthly hosting & updates.</p>
-            <span style="display:block; margin:10px; font-size:1.2rem;">$49.00 / mo</span>
-            <a href="mailto:your_email@example.com?subject=Inquiry: System Integrity" class="buy-btn" style="background-color: #333; color: #fff;">INQUIRE</a>
-        </div>
+    <main id="scroll-container">
         
-        <div class="card">
-            <h3>Consultation</h3>
-            <p style="color:#888;">1-on-1 Strategy Call.</p>
-            <span style="display:block; margin:10px; font-size:1.2rem;">$150.00 / hr</span>
-            <a href="mailto:your_email@example.com?subject=Inquiry: Architect Consultation" class="buy-btn" style="background-color: #333; color: #fff;">BOOK TIME</a>
-        </div>
+        <!-- SECTION 1: THE AWAKENING -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="status-indicator">
+                    <span class="blink">●</span> SYSTEM OPTIMAL
+                </div>
+                <h1 class="mega-title">
+                    <span class="line-1">DIGITAL</span>
+                    <span class="line-2">EVOLUTION</span>
+                </h1>
+                <p class="hero-sub">
+                    We don't build websites. We architect sentient digital environments 
+                    that live, breathe, and convert.
+                </p>
+            </div>
+        </section>
 
-        <div class="card" style="visibility: hidden;"></div>
-    </div>
+        <!-- SECTION 2: THE ARTIFACTS (Bento Sales Grid) -->
+        <section id="matrix" class="content-section">
+            <div class="section-label">
+                <span class="mono">/// SELECT PROTOCOL</span>
+                <div class="line"></div>
+            </div>
 
-    </body>
+            <div class="bento-grid">
+                <!-- PRIMARY PRODUCT -->
+                <div class="cell cell-wide glass-panel">
+                    <div class="cell-content">
+                        <i data-lucide="cpu" class="icon-glow"></i>
+                        <h3>The Neural Core</h3>
+                        <p>Complete digital transformation. 3D WebGL integration, high-frequency hosting, and AI-driven SEO structure.</p>
+                        <div class="price-lock">
+                            <span class="mono">$2,500 / deployment</span>
+                            <button class="buy-trigger">ACQUIRE</button>
+                        </div>
+                    </div>
+                    <div class="cell-bg-glow"></div>
+                </div>
+
+                <!-- SECONDARY PRODUCT -->
+                <div class="cell glass-panel">
+                    <div class="cell-content">
+                        <i data-lucide="zap" class="icon-glow"></i>
+                        <h3>Flux Velocity</h3>
+                        <p>High-speed landing pages optimized for maximum conversion.</p>
+                        <span class="mono-price">$899</span>
+                    </div>
+                </div>
+
+                <!-- TERTIARY PRODUCT -->
+                <div class="cell glass-panel">
+                    <div class="cell-content">
+                        <i data-lucide="shield" class="icon-glow"></i>
+                        <h3>Ironclad Security</h3>
+                        <p>Penetration-tested architecture.</p>
+                        <span class="mono-price">$49/mo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="hud-footer">
+            <div class="mono">NEURAL VAULT &copy; 2025 // END_OF_LINE</div>
+        </footer>
+
+    </main>
+
+    <!-- THE INTELLIGENCE (Scripts) -->
+    <!-- Three.js (The 3D Engine) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP (The Nervous System) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis (The Smooth Movement) -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- Your Custom Brain -->
+    <script src="app.js"></script>
+</body>
 </html>
