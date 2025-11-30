@@ -1,136 +1,129 @@
-// --- 1. INITIALIZATION ---
-console.log("%c SYSTEM ONLINE ", "background: #00f3ff; color: #000; font-weight: bold; padding: 5px;");
+// --- SYSTEM START ---
+console.log("%c/// NEURAL MATRIX VAULT: INITIALIZED", "color:#00f3ff; font-weight:bold;");
 lucide.createIcons();
 
-// --- 2. SMOOTH SCROLL (Lenis) ---
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-});
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
+// --- 1. SMOOTH SCROLL ---
+const lenis = new Lenis({ duration: 1.2, smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
 requestAnimationFrame(raf);
 
-// --- 3. CURSOR PHYSICS ---
-const cursorMain = document.querySelector('.cursor-main');
-const cursorFollower = document.querySelector('.cursor-follower');
+// --- 2. CURSOR PHYSICS ---
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorCircle = document.querySelector('.cursor-circle');
 
 document.addEventListener('mousemove', (e) => {
-    gsap.to(cursorMain, { x: e.clientX - 4, y: e.clientY - 4, duration: 0 });
-    gsap.to(cursorFollower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+    gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+    gsap.to(cursorCircle, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
 });
 
-// Magnetic Elements
-document.querySelectorAll('a, button, .glass-panel').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        gsap.to(cursorFollower, { scale: 2, borderColor: '#00f3ff', duration: 0.3 });
-    });
-    el.addEventListener('mouseleave', () => {
-        gsap.to(cursorFollower, { scale: 1, borderColor: 'rgba(255,255,255,0.2)', duration: 0.3 });
-    });
-});
+// --- 3. MATRIX RAIN ENGINE ---
+const mCanvas = document.getElementById('matrix-rain');
+const mCtx = mCanvas.getContext('2d');
+let mWidth = mCanvas.width = window.innerWidth;
+let mHeight = mCanvas.height = window.innerHeight;
 
-// --- 4. 3D CORE ENGINE (Three.js) ---
-const canvas = document.querySelector('#neuro-core');
-if(canvas) {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+const chars = "010101XYZA0101".split("");
+const fontSize = 14;
+const columns = mWidth / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+function drawMatrix() {
+    mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
+    mCtx.fillRect(0, 0, mWidth, mHeight);
+    mCtx.fillStyle = "#00f3ff";
+    mCtx.font = fontSize + "px monospace";
 
-    // The Geometric Brain
-    const geometry = new THREE.IcosahedronGeometry(2, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00f3ff, wireframe: true, transparent: true, opacity: 0.3 });
-    const core = new THREE.Mesh(geometry, material);
-    scene.add(core);
-
-    const innerGeo = new THREE.IcosahedronGeometry(1, 0);
-    const innerMat = new THREE.MeshBasicMaterial({ color: 0x7000ff, wireframe: true });
-    const innerCore = new THREE.Mesh(innerGeo, innerMat);
-    scene.add(innerCore);
-
-    function animate() {
-        requestAnimationFrame(animate);
-        core.rotation.y += 0.002;
-        core.rotation.x += 0.001;
-        innerCore.rotation.y -= 0.004;
-        renderer.render(scene, camera);
+    for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > mHeight && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
     }
-    animate();
-    
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    requestAnimationFrame(drawMatrix);
+}
+drawMatrix();
+
+// --- 4. 3D WEBGL GLOBE (The World Wide Web) ---
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl-scene'), alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Create Particles
+const geometry = new THREE.BufferGeometry();
+const count = 2000;
+const posArray = new Float32Array(count * 3);
+
+for(let i = 0; i < count * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 10; // Spread logic
 }
 
-// --- 5. FORMSPREE INTELLIGENCE ---
+geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+const material = new THREE.PointsMaterial({ size: 0.02, color: 0xbc13fe });
+const particleMesh = new THREE.Points(geometry, material);
+scene.add(particleMesh);
+
+camera.position.z = 3;
+
+// Mouse Interaction
+let mouseX = 0;
+let mouseY = 0;
+document.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX / window.innerWidth - 0.5;
+    mouseY = event.clientY / window.innerHeight - 0.5;
+});
+
+function animate3D() {
+    requestAnimationFrame(animate3D);
+    // Rotate entire world slowly
+    particleMesh.rotation.y += 0.001;
+    particleMesh.rotation.x += 0.001;
+    
+    // React to mouse
+    particleMesh.rotation.y += mouseX * 0.05;
+    particleMesh.rotation.x += mouseY * 0.05;
+
+    renderer.render(scene, camera);
+}
+animate3D();
+
+// --- 5. FORM TRANSMISSION (FORCE FETCH) ---
 const form = document.getElementById("neural-form");
-
-async function handleSubmit(event) {
-    event.preventDefault(); // Stop page reload
-    
-    const status = document.getElementById("status-text");
-    const btn = form.querySelector("button");
-    const data = new FormData(event.target);
-    
-    // Loading State
-    const originalText = btn.innerText;
-    btn.innerText = "ENCRYPTING...";
-    btn.style.opacity = "0.7";
-    
-    try {
-        const response = await fetch(event.target.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        });
-        
-        if (response.ok) {
-            status.innerHTML = ">> TRANSMISSION SUCCESSFUL. AGENT ALERTED.";
-            status.style.color = "#00f3ff";
-            form.reset();
-            btn.innerText = "SENT";
-            gsap.to(form, { borderColor: "#00f3ff", duration: 0.5 });
-        } else {
-            const data = await response.json();
-            if (Object.hasOwn(data, 'errors')) {
-                status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-            } else {
-                status.innerHTML = ">> ERR: NETWORK_FAILURE";
-            }
-            status.style.color = "red";
-            btn.innerText = "RETRY";
-        }
-    } catch (error) {
-        status.innerHTML = ">> ERR: SYSTEM_OFFLINE";
-        status.style.color = "red";
-        btn.innerText = "RETRY";
-    }
-}
-
 if(form) {
-    form.addEventListener("submit", handleSubmit);
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const status = document.getElementById("status-text");
+        const btn = form.querySelector("button");
+        const data = new FormData(form);
+
+        btn.innerText = "ENCRYPTING...";
+        btn.style.opacity = "0.7";
+
+        try {
+            const response = await fetch("https://formspree.io/f/6fa1484b136e4f7ca467de59d87f0595", {
+                method: "POST",
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                status.innerHTML = ">> TRANSMISSION SUCCESSFUL.";
+                status.style.color = "#00f3ff";
+                form.reset();
+                btn.innerText = "SENT";
+            } else {
+                status.innerHTML = ">> ERR: SERVER BLOCKED.";
+                status.style.color = "red";
+            }
+        } catch (err) {
+            status.innerHTML = ">> ERR: NETWORK FAILURE.";
+        }
+    });
 }
 
 // --- 6. ANIMATION TRIGGERS ---
 gsap.registerPlugin(ScrollTrigger);
-
 gsap.from(".cell", {
-    scrollTrigger: {
-        trigger: ".bento-grid",
-        start: "top 85%",
-    },
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.1,
-    ease: "power3.out"
+    scrollTrigger: { trigger: ".bento-grid", start: "top 80%" },
+    y: 50, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out"
 });
