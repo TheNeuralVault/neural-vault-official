@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL VAULT | The Singularity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="The Neural Matrix Vault: Architects of the new internet. High-frequency hosting, WebGL aesthetics, and AI-driven digital evolution.">
+    <meta name="keywords" content="Neural Matrix, Cyberpunk Website, WebGL, AI SEO, Digital Evolution, Matrix Vault">
+    <meta name="theme-color" content="#00f3ff">
+    <meta property="og:title" content="NEURAL MATRIX VAULT | System Online">
+    <meta property="og:description" content="Enter the construct. State of the art digital architecture.">
+    <meta property="og:image" content="https://neuralmatrixvault.com/preview.jpg">
     
-    <!-- FONTS: The Voice of the System -->
+    <title>NEURAL MATRIX VAULT | The Singularity</title>
+    
+    <!-- PWA LINK -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
@@ -14,28 +24,45 @@
     
     <!-- STYLES -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- SEO SCHEMA (GOOGLE KNOWLEDGE GRAPH) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Neural Matrix Vault",
+      "url": "https://neuralmatrixvault.com",
+      "logo": "https://neuralmatrixvault.com/logo.png",
+      "sameAs": ["https://github.com/theneuralvault"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "theneuralvaultai@gmail.com",
+        "contactType": "sales"
+      }
+    }
+    </script>
 </head>
 <body>
 
-    <!-- 3D CORE & ATMOSPHERE -->
-    <canvas id="neuro-core"></canvas>
-    <div class="noise-layer"></div>
-    <div class="vignette-layer"></div>
+    <!-- VISUAL ENGINE -->
+    <canvas id="matrix-rain"></canvas>
+    <canvas id="webgl-scene"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
     
-    <!-- CURSOR SYSTEM -->
-    <div class="cursor-main"></div>
-    <div class="cursor-follower"></div>
+    <!-- UI LAYER -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
 
-    <!-- HUD HEADER -->
     <header class="hud-header">
         <div class="brand">
             <span class="brand-icon">❖</span>
-            NEURAL<span class="pulse">_VAULT</span>
+            NEURAL<span class="pulse">_MATRIX</span>
         </div>
         <nav class="hud-nav">
             <a href="#matrix" class="nav-item">ARCHITECTURES</a>
-            <a href="#utility" class="nav-item">UTILITY</a>
-            <a href="#contact" class="nav-item">COMM_LINK</a>
+            <a href="#assets" class="nav-item">MARKET</a>
+            <a href="#contact" class="nav-item">UPLINK</a>
         </nav>
         <a href="#matrix" class="action-btn">
             <span class="btn-text">INITIALIZE</span>
@@ -48,157 +75,142 @@
         <!-- HERO SECTION -->
         <section class="hero-section">
             <div class="hero-content">
-                <div class="status-indicator">
-                    <span class="blink">●</span> SYSTEM ONLINE
+                <div class="status-badge">
+                    <span class="blink">●</span> SECURE CONNECTION ESTABLISHED
                 </div>
-                <h1 class="mega-title">
-                    <span class="line-1">DIGITAL</span>
-                    <span class="line-2">EVOLUTION</span>
+                <h1 class="mega-title glitch" data-text="THE_SINGULARITY">
+                    THE_SINGULARITY
                 </h1>
                 <p class="hero-sub">
-                    Titanium structure. Digital spine. We architect sentient environments.
+                    We are the architects of the impossible. <br>
+                    <span style="color:#fff;">Titanium Code. Artificial Intelligence. Infinite Scale.</span>
                 </p>
             </div>
         </section>
 
-        <!-- PRIMARY ARCHITECTURES (The Matrix) -->
+        <!-- HIGH TICKET PRODUCTS -->
         <section id="matrix" class="content-section">
-            <div class="section-label">
+            <div class="section-header">
                 <span class="mono">/// PRIMARY_ARCHITECTURES</span>
                 <div class="line"></div>
             </div>
 
             <div class="bento-grid">
-                
-                <!-- 1. THE NEURAL CORE ($2500) -->
-                <div class="cell cell-wide glass-panel">
+                <!-- NEURAL CORE -->
+                <div class="cell cell-wide glass-panel glow-hover">
                     <div class="cell-content">
                         <div class="flex-row">
-                            <i data-lucide="cpu" class="icon-glow"></i>
-                            <span class="tag mono">FLAGSHIP</span>
+                            <i data-lucide="cpu" class="icon-brand"></i>
+                            <span class="tag">FLAGSHIP</span>
                         </div>
                         <h3>The Neural Core</h3>
-                        <p>Complete digital transformation. 3D WebGL integration, high-frequency hosting, and AI-driven SEO structure. The backbone of modern digital dominance.</p>
+                        <p>Complete digital transformation. 3D WebGL integration, high-frequency hosting, and AI-driven SEO structure.</p>
                         <div class="price-lock">
-                            <span class="mono">$2,500 / deployment</span>
+                            <span class="mono">$2,500</span>
                             <a href="https://buy.stripe.com/7sY7sL8dib6SbuvbPt8g001" class="buy-trigger">DEPLOY CORE</a>
                         </div>
                     </div>
-                    <div class="cell-bg-glow"></div>
                 </div>
 
-                <!-- 2. FLUX VELOCITY ($899) -->
-                <div class="cell glass-panel">
+                <!-- FLUX VELOCITY -->
+                <div class="cell glass-panel glow-hover">
                     <div class="cell-content">
-                        <i data-lucide="zap" class="icon-glow"></i>
+                        <i data-lucide="zap" class="icon-brand"></i>
                         <h3>Flux Velocity</h3>
-                        <p>High-speed landing pages optimized for maximum conversion. Engineered for speed.</p>
+                        <p>High-speed landing pages optimized for maximum conversion.</p>
                         <div class="price-lock">
-                            <span class="mono">$899.00</span>
+                            <span class="mono">$899</span>
                             <a href="https://buy.stripe.com/aFa3cv2SY3EqaqrcTx8g002" class="buy-trigger small">INITIATE</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. AERO PROTOCOL (Split Pricing) -->
-                <div class="cell glass-panel">
+                <!-- AERO PROTOCOL -->
+                <div class="cell glass-panel glow-hover">
                     <div class="cell-content">
-                        <i data-lucide="wind" class="icon-glow"></i>
+                        <i data-lucide="wind" class="icon-brand"></i>
                         <h3>Aero Protocol</h3>
-                        <p>Aerospace-grade minimalism. Swiss-grid architecture for high-end corporate portfolios.</p>
-                        
-                        <!-- Dual Button Layout -->
-                        <div class="dual-action-container">
-                            <div class="action-row">
-                                <span class="mono-xs">LICENSE ONLY ($499)</span>
-                                <a href="https://buy.stripe.com/eVqbJ1bpu6QCbuv06L8g004" class="buy-trigger xs">BUY KEY</a>
-                            </div>
-                            <div class="action-row highlight-row">
-                                <span class="mono-xs">FULL DEPLOY ($1,499)</span>
-                                <a href="https://buy.stripe.com/bJe28r79e3Eq7efcTx8g003" class="buy-trigger xs">DEPLOY</a>
-                            </div>
+                        <p>Aerospace-grade minimalism. Swiss-grid architecture.</p>
+                        <div class="dual-action">
+                            <a href="https://buy.stripe.com/eVqbJ1bpu6QCbuv06L8g004" class="xs-btn">LICENSE ($499)</a>
+                            <a href="https://buy.stripe.com/bJe28r79e3Eq7efcTx8g003" class="xs-btn highlight">DEPLOY ($1499)</a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- UTILITY PROTOCOLS (Services) -->
-        <section id="utility" class="content-section">
-            <div class="section-label">
-                <span class="mono">/// UTILITY_PROTOCOLS</span>
+        <!-- DIGITAL MARKETPLACE (CASH FLOW) -->
+        <section id="assets" class="content-section">
+            <div class="section-header">
+                <span class="mono">/// DIGITAL_ARMORY</span>
                 <div class="line"></div>
             </div>
 
             <div class="bento-grid">
-                
-                <!-- SERVICE 1: SIGNAL AMPLIFICATION -->
+                <!-- ASSET PACK -->
                 <div class="cell glass-panel">
-                    <i data-lucide="signal" class="icon-glow"></i>
-                    <h3>Signal Amplification</h3>
-                    <p class="mono-dim">AI-driven search engine dominance. Schema markup and semantic data injection.</p>
+                    <i data-lucide="folder-output" class="icon-brand"></i>
+                    <h3>Neural_OS Assets</h3>
+                    <p class="mono-dim">50+ Cyberpunk Icons, Glitch Wallpapers, Fonts.</p>
                     <div class="price-lock">
-                        <span class="mono">$299.00 / mo</span>
-                        <a href="https://buy.stripe.com/14AcN5alq2Am9mn8Dh8g005" class="buy-trigger small">SUBSCRIBE</a>
+                        <span class="mono">$29.00</span>
+                        <a href="https://buy.stripe.com/14AcN5alq2Am9mn8Dh8g005" class="buy-trigger small">DOWNLOAD</a>
                     </div>
                 </div>
 
-                <!-- SERVICE 2: WORKFLOW AUTOMATA -->
+                <!-- OBS PACK -->
                 <div class="cell glass-panel">
-                    <i data-lucide="bot" class="icon-glow"></i>
-                    <h3>Workflow Automata</h3>
-                    <p class="mono-dim">Custom scripts to automate email sorting, onboarding, and data entry.</p>
+                    <i data-lucide="monitor-play" class="icon-brand"></i>
+                    <h3>Streamer Overlay</h3>
+                    <p class="mono-dim">OBS/Streamlabs Neon HUD package for creators.</p>
                     <div class="price-lock">
-                        <span class="mono">$750.00 / setup</span>
-                        <a href="https://buy.stripe.com/9B65kD5163Eq7ef4n18g006" class="buy-trigger small">AUTOMATE</a>
+                        <span class="mono">$39.00</span>
+                        <a href="https://buy.stripe.com/9B65kD5163Eq7ef4n18g006" class="buy-trigger small">GET PACK</a>
                     </div>
                 </div>
 
-                <!-- SERVICE 3: DIGITAL FORTRESS -->
+                <!-- AUDIT -->
                 <div class="cell glass-panel">
-                    <i data-lucide="shield-check" class="icon-glow"></i>
-                    <h3>Digital Fortress</h3>
-                    <p class="mono-dim">Complete privacy and security sweep. We find the leaks before they do.</p>
+                    <i data-lucide="activity" class="icon-brand"></i>
+                    <h3>Velocity Audit</h3>
+                    <p class="mono-dim">We scan your site and send a fix-list PDF.</p>
                     <div class="price-lock">
-                        <span class="mono">$500.00 / scan</span>
-                        <a href="https://buy.stripe.com/7sYbJ1ctya2O9mn6v98g007" class="buy-trigger small">SECURE</a>
+                        <span class="mono">$99.00</span>
+                        <a href="https://buy.stripe.com/7sYbJ1ctya2O9mn6v98g007" class="buy-trigger small">START SCAN</a>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- ENCRYPTED TRANSMISSION (Formspree) -->
+        <!-- CONTACT FORM -->
         <section id="contact" class="content-section" style="max-width: 600px; margin: 0 auto;">
-            <div class="section-label">
-                <span class="mono">/// ENCRYPTED_TRANSMISSION</span>
+            <div class="section-header">
+                <span class="mono">/// ENCRYPTED_UPLINK</span>
                 <div class="line"></div>
             </div>
             
-            <form action="https://formspree.io/f/6fa1484b136e4f7ca467de59d87f0595" method="POST" id="neural-form" class="glass-panel">
-                <div style="margin-bottom: 20px;">
-                    <label class="mono" style="color:var(--neon-blue)">/// IDENTITY</label>
-                    <input type="email" name="email" placeholder="ENTER_EMAIL_ID" required 
-                           style="width:100%; padding:15px; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; font-family:'Space Mono'; margin-top:10px; outline:none;">
+            <form id="neural-form" class="glass-panel form-container">
+                <div class="form-group">
+                    <label>IDENTITY_TOKEN (EMAIL)</label>
+                    <input type="email" name="email" required placeholder="ENTER_EMAIL">
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <label class="mono" style="color:var(--neon-blue)">/// DATA_PACKET</label>
-                    <textarea name="message" placeholder="ENTER_MESSAGE_PARAMETERS" rows="4"
-                           style="width:100%; padding:15px; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; font-family:'Space Mono'; margin-top:10px; outline:none;"></textarea>
+                <div class="form-group">
+                    <label>DATA_PACKET (MESSAGE)</label>
+                    <textarea name="message" rows="4" required placeholder="ENTER_PARAMETERS"></textarea>
                 </div>
-                <button type="submit" class="buy-trigger" style="width:100%">TRANSMIT TO VAULT</button>
-                <div id="status-text" class="mono" style="margin-top:15px; text-align:center;"></div>
+                <button type="submit" class="submit-btn">TRANSMIT TO VAULT</button>
+                <div id="status-text" class="status-log"></div>
             </form>
         </section>
 
         <footer class="hud-footer">
-            <div class="mono">NEURAL VAULT &copy; 2025 // SYSTEM_OPTIMAL</div>
+            <div class="mono">NEURAL MATRIX VAULT &copy; 2025 // SYSTEM_OPTIMAL</div>
         </footer>
 
     </main>
 
-    <!-- THE INTELLIGENCE -->
+    <!-- ENGINES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
