@@ -1,13 +1,13 @@
 // --- SYSTEM START ---
-console.log("%c/// NEURAL MATRIX VAULT: SYSTEM ONLINE", "color:#00f3ff; font-weight:bold; font-size:14px;");
+console.log("%c/// NEURAL MATRIX VAULT: EMPIRE ONLINE", "color:#00f3ff; font-weight:bold; font-size:14px;");
 console.log("%c/// CREED: Others sell domains. We create impenetrable fortresses that last forever.", "background:#000; color:#ffaa00; padding:5px; border:1px solid #ffaa00;");
 try { lucide.createIcons(); } catch(e) {}
 
-// --- 1. VISIBILITY API (Battery Saver) ---
+// --- 1. VISIBILITY API ---
 let isPageVisible = true;
 document.addEventListener("visibilitychange", () => { isPageVisible = !document.hidden; });
 
-// --- 2. CHROMATIC MATRIX RAIN ---
+// --- 2. CHROMATIC MATRIX RAIN (Spectrum Mode) ---
 const mCanvas = document.getElementById('matrix-rain');
 if (mCanvas) {
     const mCtx = mCanvas.getContext('2d');
@@ -20,9 +20,15 @@ if (mCanvas) {
     const columns = mWidth / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
 
+    // THE 7 PILLAR SPECTRUM
     const palette = [
-        { r: 0, g: 243, b: 255 }, { r: 10, g: 255, b: 10 }, { r: 255, g: 215, b: 0 },
-        { r: 255, g: 255, b: 255 }, { r: 128, g: 128, b: 128 }, { r: 255, g: 0, b: 0 }
+        { r: 0, g: 243, b: 255 },   // Core
+        { r: 255, g: 0, b: 85 },    // Flux
+        { r: 255, g: 255, b: 255 }, // Aero
+        { r: 188, g: 19, b: 254 },  // Nexus
+        { r: 255, g: 170, b: 0 },   // Cipher
+        { r: 0, g: 255, b: 170 },   // Prism
+        { r: 255, g: 85, b: 0 }     // Omega
     ];
     let time = 0;
 
@@ -31,7 +37,7 @@ if (mCanvas) {
         mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
         mCtx.fillRect(0, 0, mWidth, mHeight);
 
-        time += 0.005;
+        time += 0.003; // Slow shift
         const index = Math.floor(time) % palette.length;
         const nextIndex = (index + 1) % palette.length;
         const factor = time - Math.floor(time);
@@ -72,9 +78,7 @@ if (mCanvas) {
 
     // CORE (Obsidian)
     const coreGeo = new THREE.IcosahedronGeometry(1.5, 0);
-    const coreMat = new THREE.MeshPhongMaterial({
-        color: 0x000000, emissive: 0x111111, specular: 0xffffff, shininess: 90, flatShading: true
-    });
+    const coreMat = new THREE.MeshPhongMaterial({ color: 0x000000, emissive: 0x111111, specular: 0xffffff, shininess: 90, flatShading: true });
     const core = new THREE.Mesh(coreGeo, coreMat);
     scene.add(core);
 
@@ -108,7 +112,6 @@ if (mCanvas) {
     const stream = new THREE.Points(streamGeo, streamMat);
     scene.add(stream);
 
-    // LIGHTS
     const light1 = new THREE.PointLight(0x00f3ff, 2, 10); light1.position.set(3, 3, 3); scene.add(light1);
     const light2 = new THREE.PointLight(0xffaa00, 2, 15); light2.position.set(-3, -3, 3); scene.add(light2);
 
@@ -159,13 +162,39 @@ if (window.innerWidth > 768) {
     } catch(e){}
 }
 
-// --- 5. CURSOR ---
+// --- 5. INTERACTIVE CURSOR & PILLAR SENSING ---
 if (window.innerWidth > 768) {
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorCircle = document.querySelector('.cursor-circle');
+    
     document.addEventListener('mousemove', (e) => {
         gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
         gsap.to(cursorCircle, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+    });
+
+    // CHAMELEON CURSOR: Changes color based on which Pillar you hover
+    const pillars = [
+        { selector: '.pillar-core', color: '#00f3ff' },
+        { selector: '.pillar-flux', color: '#ff0055' },
+        { selector: '.pillar-aero', color: '#ffffff' },
+        { selector: '.pillar-nexus', color: '#bc13fe' },
+        { selector: '.pillar-cipher', color: '#ffaa00' },
+        { selector: '.pillar-prism', color: '#00ffaa' },
+        { selector: '.pillar-omega', color: '#ff5500' }
+    ];
+
+    pillars.forEach(p => {
+        const el = document.querySelector(p.selector);
+        if(el) {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursorDot, { backgroundColor: p.color });
+                gsap.to(cursorCircle, { borderColor: p.color, scale: 1.5 });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursorDot, { backgroundColor: '#00f3ff' }); // Return to Core Blue
+                gsap.to(cursorCircle, { borderColor: 'rgba(255,255,255,0.3)', scale: 1 });
+            });
+        }
     });
 }
 
