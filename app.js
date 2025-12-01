@@ -1,214 +1,214 @@
-// --- NEURAL MATRIX VAULT: MASTER ALGORITHM ---
-console.log("%c/// SYSTEM ONLINE: CLASS-5 ARCHITECTURE", "background:#000; color:#00f3ff; border:1px solid #00f3ff; padding:5px;");
+// --- INITIALIZATION SEQUENCE ---
+console.log("%c/// NEURAL MATRIX VAULT: GOD MODE ENGAGED", "background:#000; color:#00f3ff; font-size:12px; padding:5px; border:1px solid #00f3ff;");
 try { lucide.createIcons(); } catch(e) {}
 
-// --- CONFIGURATION ---
-const bodyID = document.body.id;
+// --- 1. PERFORMANCE OPTIMIZER (Battery Saver) ---
 let isVisible = true;
 document.addEventListener("visibilitychange", () => { isVisible = !document.hidden; });
 
-// --- 1. THE COMPOSITOR (Decides which Engine to run) ---
-function initSystem() {
-    // Universal Matrix Rain (Runs on all pages)
-    initMatrixRain();
-
-    // Specific Artifact Engine (Runs based on Page ID)
-    const vessel = document.getElementById('singularity-vessel');
-    if (vessel) {
-        if (bodyID === 'page-core') initCoreEngine(vessel);
-        else if (bodyID === 'page-flux') initFluxEngine(vessel);
-        else if (bodyID === 'page-aero') initAeroEngine(vessel);
-        else if (bodyID === 'page-nexus') initNexusEngine(vessel);
-        else if (bodyID === 'page-cipher') initCipherEngine(vessel);
-        else if (bodyID === 'page-prism') initPrismEngine(vessel);
-        else if (bodyID === 'page-omega') initOmegaEngine(vessel);
-    }
+// --- 2. THE LIQUID ENGINE (Custom GLSL Shader Background) ---
+// This creates the "Liquid Metal" background effect using WebGL
+// Note: This runs only on Desktop to save mobile battery
+if (window.innerWidth > 768) {
+    try {
+        const canvas = document.getElementById('liquid-engine');
+        const gl = canvas.getContext('webgl');
+        
+        if (gl) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Vertex Shader (Geometry)
+            const vsSource = `
+                attribute vec2 position;
+                void main() { gl_Position = vec4(position, 0.0, 1.0); }
+            `;
+            
+            // Fragment Shader (The Liquid Math)
+            const fsSource = `
+                precision mediump float;
+                uniform float time;
+                uniform vec2 resolution;
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / resolution.xy;
+                    float color = 0.0;
+                    color += sin(uv.x * 10.0 + time) * 0.1;
+                    color += sin(uv.y * 10.0 + time) * 0.1;
+                    color += sin((uv.x + uv.y) * 10.0 + time) * 0.1;
+                    gl_FragColor = vec4(vec3(color * 0.1, color * 0.2, color * 0.3), 1.0);
+                }
+            `;
+            
+            // Compile Shaders
+            const vs = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vs, vsSource); gl.compileShader(vs);
+            const fs = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fs, fsSource); gl.compileShader(fs);
+            
+            const program = gl.createProgram();
+            gl.attachShader(program, vs); gl.attachShader(program, fs);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+            
+            const triangleVertices = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
+            const positionAttributeLocation = gl.getAttribLocation(program, 'position');
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, triangleVertices, gl.STATIC_DRAW);
+            gl.enableVertexAttribArray(positionAttributeLocation);
+            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+            
+            const timeLocation = gl.getUniformLocation(program, 'time');
+            const resolutionLocation = gl.getUniformLocation(program, 'resolution');
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            
+            function renderShader(now) {
+                if (isVisible) {
+                    gl.uniform1f(timeLocation, now * 0.001);
+                    gl.drawArrays(gl.TRIANGLES, 0, 6);
+                }
+                requestAnimationFrame(renderShader);
+            }
+            requestAnimationFrame(renderShader);
+        }
+    } catch(e) { console.log("Liquid Engine Offline"); }
 }
 
-// --- 2. UNIVERSAL MATRIX RAIN ---
-function initMatrixRain() {
-    const canvas = document.getElementById('matrix-rain');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    
+// --- 3. THE SINGULARITY ARTIFACT (Generative 3D Hero) ---
+(function initSingularity() {
+    const container = document.getElementById('singularity-vessel');
+    if (!container) return;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x050505, 0.03); // Void Fog
+
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.z = 6;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // CORE: OBSIDIAN
+    const coreGeo = new THREE.IcosahedronGeometry(1.5, 1);
+    const coreMat = new THREE.MeshPhongMaterial({
+        color: 0x000000, emissive: 0x050505, specular: 0xffffff, shininess: 100, flatShading: true
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    // CAGE: GOLD WIRE
+    const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
+    const wireMat = new THREE.MeshBasicMaterial({ color: 0xffaa00, wireframe: true, transparent: true, opacity: 0.3 });
+    const cage = new THREE.Mesh(wireGeo, wireMat);
+    scene.add(cage);
+
+    // VORTEX PARTICLES
+    const particleCount = 1000;
+    const streamGeo = new THREE.BufferGeometry();
+    const positions = [];
+    const colors = [];
+    const colorA = new THREE.Color(0x00f3ff);
+    const colorB = new THREE.Color(0xffaa00);
+
+    for (let i = 0; i < particleCount; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const r = 2.5 + Math.random() * 2;
+        const x = Math.cos(t) * r;
+        const y = (Math.random() - 0.5) * 2;
+        const z = Math.sin(t) * r;
+        positions.push(x, y, z);
+        
+        const c = Math.random() > 0.5 ? colorA : colorB;
+        colors.push(c.r, c.g, c.b);
+    }
+    streamGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    streamGeo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    const streamMat = new THREE.PointsMaterial({ size: 0.04, vertexColors: true, transparent: true, opacity: 0.8 });
+    const stream = new THREE.Points(streamGeo, streamMat);
+    scene.add(stream);
+
+    // DYNAMIC LIGHTS
+    const l1 = new THREE.PointLight(0x00f3ff, 2, 10); l1.position.set(3, 2, 3); scene.add(l1);
+    const l2 = new THREE.PointLight(0xffaa00, 2, 10); l2.position.set(-3, -2, 3); scene.add(l2);
+
+    function animate() {
+        if (isVisible) {
+            core.rotation.y += 0.004; core.rotation.x -= 0.002;
+            cage.rotation.y += 0.004; cage.rotation.x -= 0.002;
+            stream.rotation.y -= 0.005; stream.rotation.z += 0.001;
+            renderer.render(scene, camera);
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+})();
+
+// --- 4. CHROMATIC MATRIX (The Rain) ---
+const mCanvas = document.getElementById('matrix-rain');
+if (mCanvas) {
+    const mCtx = mCanvas.getContext('2d');
+    let mWidth = window.innerWidth; let mHeight = window.innerHeight;
+    mCanvas.width = mWidth; mCanvas.height = mHeight;
+
     const chars = "01XYZA".split("");
     const fontSize = 14;
-    const columns = canvas.width / fontSize;
+    const columns = mWidth / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
+    
+    // The Divine Spectrum
+    const palette = [{r:0,g:243,b:255}, {r:10,g:255,b:10}, {r:255,g:215,b:0}, {r:255,g:255,b:255}, {r:255,g:0,b:0}];
+    let time = 0;
 
-    // Dynamic Color based on Page Identity
-    let r=0, g=243, b=255; // Default Core Blue
-    if(bodyID === 'page-flux') { r=255; g=0; b=85; }
-    if(bodyID === 'page-aero') { r=255; g=255; b=255; }
-    if(bodyID === 'page-nexus') { r=188; g=19; b=254; }
-    if(bodyID === 'page-cipher') { r=255; g=170; b=0; }
-    if(bodyID === 'page-prism') { r=0; g=255; b=170; }
-    if(bodyID === 'page-omega') { r=255; g=85; b=0; }
+    function drawMatrix() {
+        if (!isVisible) { requestAnimationFrame(drawMatrix); return; }
+        
+        mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
+        mCtx.fillRect(0, 0, mWidth, mHeight);
+        
+        time += 0.002;
+        const colorIdx = Math.floor(time) % palette.length;
+        const c = palette[colorIdx];
+        mCtx.fillStyle = `rgb(${c.r},${c.g},${c.b})`;
+        mCtx.font = fontSize + "px monospace";
 
-    function draw() {
-        if(!isVisible) { requestAnimationFrame(draw); return; }
-        ctx.fillStyle = "rgba(5, 5, 5, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
-        ctx.font = fontSize + "px monospace";
         for (let i = 0; i < drops.length; i++) {
             const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > mHeight && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         }
-        requestAnimationFrame(draw);
+        requestAnimationFrame(drawMatrix);
     }
-    draw();
+    drawMatrix();
 }
 
-// --- 3. THE 7 ENGINES (Unique Physics per Page) ---
-
-// ENGINE 1: CORE (Icosahedron - The Brain)
-function initCoreEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.IcosahedronGeometry(2, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00f3ff, wireframe: true, transparent:true, opacity:0.3 });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-    camera.position.z = 5;
-    
-    function animate() {
-        if(isVisible) { mesh.rotation.y += 0.002; mesh.rotation.x += 0.001; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 2: FLUX (Warp Tunnel - Speed)
-function initFluxEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.BufferGeometry();
-    const count = 1000;
-    const pos = [];
-    for(let i=0; i<count; i++) {
-        pos.push((Math.random()-0.5)*10, (Math.random()-0.5)*10, (Math.random()-0.5)*10);
-    }
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    const material = new THREE.PointsMaterial({ size:0.05, color:0xff0055 });
-    const stars = new THREE.Points(geometry, material);
-    scene.add(stars);
-    camera.position.z = 5;
-
-    function animate() {
-        if(isVisible) { 
-            stars.rotation.z += 0.005; // Spin
-            stars.scale.z += 0.01; // Stretch
-            renderer.render(scene, camera); 
-        }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 3: AERO (Grid - Structure)
-function initAeroEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.BoxGeometry(2.5, 2.5, 2.5);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent:true, opacity:0.15 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-    camera.position.z = 5;
-
-    function animate() {
-        if(isVisible) { cube.rotation.y += 0.001; cube.rotation.x -= 0.001; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 4: NEXUS (Network - Connection)
-function initNexusEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.SphereGeometry(2.2, 16, 16);
-    const material = new THREE.MeshBasicMaterial({ color: 0xbc13fe, wireframe: true, transparent:true, opacity:0.2 });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
-    camera.position.z = 5;
-
-    function animate() {
-        if(isVisible) { sphere.rotation.y -= 0.003; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 5: CIPHER (Gold Dust - Wealth)
-function initCipherEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.BufferGeometry();
-    const count = 1500;
-    const pos = [];
-    for(let i=0; i<count; i++) {
-        pos.push((Math.random()-0.5)*8, (Math.random()-0.5)*8, (Math.random()-0.5)*8);
-    }
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    const material = new THREE.PointsMaterial({ size:0.03, color:0xffaa00 });
-    const gold = new THREE.Points(geometry, material);
-    scene.add(gold);
-    camera.position.z = 5;
-
-    function animate() {
-        if(isVisible) { gold.rotation.y += 0.001; gold.rotation.x += 0.0005; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 6: PRISM (Planes - Interface)
-function initPrismEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.ConeGeometry(2, 3, 4);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ffaa, wireframe: true, transparent:true, opacity:0.2 });
-    const pyramid = new THREE.Mesh(geometry, material);
-    scene.add(pyramid);
-    camera.position.z = 5;
-    pyramid.rotation.x = 0.5;
-
-    function animate() {
-        if(isVisible) { pyramid.rotation.y += 0.005; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ENGINE 7: OMEGA (Torus Knot - Dimension)
-function initOmegaEngine(container) {
-    const {scene, camera, renderer} = setupScene(container);
-    const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 64, 8);
-    const material = new THREE.MeshBasicMaterial({ color: 0xff5500, wireframe: true, transparent:true, opacity:0.2 });
-    const knot = new THREE.Mesh(geometry, material);
-    scene.add(knot);
-    camera.position.z = 5;
-
-    function animate() {
-        if(isVisible) { knot.rotation.z += 0.005; knot.rotation.x += 0.002; renderer.render(scene, camera); }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// --- HELPER: SCENE SETUP ---
-function setupScene(container) {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
-    return {scene, camera, renderer};
-}
-
-// --- INITIALIZE ---
-initSystem();
-
-// --- SCROLL ANIMATIONS ---
+// --- 5. LOGIC & SCROLL ---
 try {
+    const lenis = new Lenis({ duration: 1.2, smooth: true });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    
+    // Desktop Cursor
+    if (window.innerWidth > 768) {
+        const dot = document.querySelector('.cursor-dot');
+        const circ = document.querySelector('.cursor-circle');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(circ, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+        });
+    }
+    
     gsap.registerPlugin(ScrollTrigger);
-    gsap.from(".cell", { scrollTrigger: { trigger: ".bento-grid", start: "top 85%" }, y: 30, opacity: 0, duration: 0.8, stagger: 0.1 });
+    gsap.from(".cell", {
+        scrollTrigger: { trigger: ".bento-grid", start: "top 85%" },
+        y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out"
+    });
 } catch(e) {}
