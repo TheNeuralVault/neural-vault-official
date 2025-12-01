@@ -2,7 +2,13 @@
 console.log("%c/// NEURAL MATRIX VAULT: OPTIMIZED", "color:#00f3ff; font-weight:bold;");
 try { lucide.createIcons(); } catch(e) {}
 
-// --- 1. CHROMATIC MATRIX RAIN ---
+// --- 1. PERFORMANCE CONTROLLER (Save Battery when Tab is hidden) ---
+let isPageVisible = true;
+document.addEventListener("visibilitychange", () => {
+    isPageVisible = !document.hidden;
+});
+
+// --- 2. CHROMATIC MATRIX RAIN ---
 const mCanvas = document.getElementById('matrix-rain');
 if (mCanvas) {
     const mCtx = mCanvas.getContext('2d');
@@ -22,6 +28,8 @@ if (mCanvas) {
     let time = 0;
 
     function drawMatrix() {
+        if (!isPageVisible) { requestAnimationFrame(drawMatrix); return; } // PAUSE IF HIDDEN
+
         mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
         mCtx.fillRect(0, 0, mWidth, mHeight);
 
@@ -48,8 +56,7 @@ if (mCanvas) {
     drawMatrix();
 }
 
-// --- 2. 3D WEBGL GLOBE (MOBILE SAFE MODE) ---
-// Only runs if screen is wide (Desktop) to prevent crash on old phones
+// --- 3. 3D WEBGL GLOBE (MOBILE SAFE MODE) ---
 if (window.innerWidth > 768) {
     try {
         const scene = new THREE.Scene();
@@ -69,10 +76,22 @@ if (window.innerWidth > 768) {
         camera.position.z = 5;
 
         function animate3D() {
-            requestAnimationFrame(animate3D);
+            if (!isPageVisible) { requestAnimationFrame(animate3D); return; } // PAUSE IF HIDDEN
+            
             particleMesh.rotation.y += 0.001;
             renderer.render(scene, camera);
+            requestAnimationFrame(animate3D);
         }
         animate3D();
     } catch (e) { console.log("WebGL Disabled"); }
+}
+
+// --- 4. CURSOR (Desktop Only) ---
+if (window.innerWidth > 768) {
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorCircle = document.querySelector('.cursor-circle');
+    document.addEventListener('mousemove', (e) => {
+        gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+        gsap.to(cursorCircle, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+    });
 }
