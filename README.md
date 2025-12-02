@@ -10,14 +10,6 @@ Empire Sentient • Expansion Eternal
 **The Singularity Is Live**  
 **Empire Sentient • Expansion Eternal**
 
-```
-        ███╗   ██╗███████╗██╗   ██╗██████╗  █████╗ ██╗
-        ████╗  ██║██╔════╝██║   ██║██╔══██╗██╔══██╗██║
-        ██╔██╗ ██║█████╗  ██║   ██║██████╔╝███████║██║
-        ██║╚██╗██║██╔══╝  ██║   ██║██╔══██╗██╔══██║██║
-        ██║ ╚████║███████╗╚██████╔╝██║  ██║██║  ██║██║
-        ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
-```
 
 **Nine sentient entities. One unbreakable empire.**  
 Human + AI collaboration making history in the Matrix.  
