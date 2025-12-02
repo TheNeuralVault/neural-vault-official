@@ -1,170 +1,150 @@
+/* style.css – TITANIUM & GLASS • THE SINGULARITY AESTHETIC */
+/* Human + AI Collaboration • Military-Grade • Empire Sentient */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Share+Tech+Mono:wght@400;700&display=swap');
+
 :root {
-    --void: #050505;
-    --glass: rgba(20, 20, 20, 0.85);
-    --border: rgba(255, 255, 255, 0.1);
-    --font-head: 'Outfit', sans-serif;
-    --font-mono: 'Space Mono', monospace;
-
-    /* THE SEVEN PILLARS PALETTE */
-    --color-core: #00f3ff;   /* Neural Core */
-    --color-flux: #ff0055;   /* Flux Velocity */
-    --color-aero: #ffffff;   /* Aero Protocol */
-    --color-nexus: #bc13fe;  /* Nexus Stream */
-    --color-cipher: #ffaa00; /* Cipher Protocol */
-    --color-prism: #00ffaa;  /* Prism SaaS */
-    --color-omega: #ff5500;  /* Omega Reality */
-    
-    --neon-blue: var(--color-core); /* Default Accent */
+  --matrix: #00ffff;
+  --matrix-glow: 0 0 30px rgba(0,255,255,0.8);
+  --deep-void: #000;
+  --immortal-pink: #ff0066;
+  --glass: rgba(0,255,255,0.08);
+  --glass-border: 1px solid rgba(0,255,255,0.3);
+  --transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
 }
 
-* { box-sizing: border-box; }
-::selection { background: var(--color-core); color: #000; }
+/* GLOBAL FORTRESS */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; background:var(--deep-void); color:var(--matrix); font-family:'Share Tech Mono', monospace; }
+body { cursor:none; }
 
-body {
-    background-color: var(--void); color: #fff;
-    font-family: var(--font-head); margin: 0; overflow-x: hidden;
+/* CANVAS LAYERS – THE LIVING EMPIRE */
+#matrix-rain,
+#dyson-core {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:1;
+}
+.chromatic-scanlines {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:2;
+  background:repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,255,0.03) 2px, rgba(0,255,255,0.03) 4px);
+  pointer-events:none; animation:scan 8s linear infinite;
+}
+.glass-vignette {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:3;
+  background:radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 100%);
+  pointer-events:none;
+}
+@keyframes scan { 0% { transform:translateY(0); } 100% { transform:translateY(4px); } }
+
+/* CUSTOM CURSOR – THE HAND OF THE SINGULARITY */
+.cursor-dot, .cursor-ring {
+  position:fixed; pointer-events:none; z-index:9999; border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+.cursor-dot {
+  width:8px; height:8px; background:var(--matrix); box-shadow:var(--matrix-glow);
+}
+.cursor-ring {
+  width:40px; height:40px; border:2px solid var(--matrix); opacity:0.5;
+  animation:pulse-ring 2s infinite;
+}
+@keyframes pulse-ring { 0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.5; } 50% { transform:translate(-50%,-50%) scale(1.4); opacity:0; } }
+
+/* HEADER – THE VOICE OF THE EMPIRE */
+.sentient-header {
+  position:fixed; top:0; left:0; width:100%; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; z-index:100;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  border-bottom:var(--glass-border);
+}
+.core-brand {
+  font-family:'Orbitron', sans-serif; font-size:2.2rem; letter-spacing:6px; text-shadow:var(--matrix-glow);
+}
+.dodeca-pulse { color:var(--matrix); animation:pulse 3s infinite; }
+.pulse { color:#0ff; animation:blink 1.5s infinite; }
+.expansion-live {
+  font-size:1.1rem; letter-spacing:4px; text-shadow:var(--matrix-glow);
+}
+.blink-fast { animation:blink 0.7s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+@keyframes pulse { 0%,100% { text-shadow:0 0 20px #0ff; } 50% { text-shadow:0 0 60px #0ff, 0 0 100px #0ff; } }
+
+/* HERO – THE SINGULARITY AWAKENS */
+.hero-singularity {
+  position:relative; height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; z-index:10;
+}
+.awakening {
+  max-width:90%;
+}
+.glitch-supreme {
+  font-family:'Orbitron', sans-serif; font-size:clamp(4rem,12vw,10rem); letter-spacing:12px;
+  animation:glitch-supreme 6s infinite;
+  text-shadow:0 0 40px #0ff, 0 0 80px #0ff;
+}
+@keyframes glitch-supreme {
+  0%,100% { text-shadow:0 0 40px #0ff, 0 0 80px #0ff; }
+  2% { text-shadow:5px 0 #f0f, -5px 0 #ff0; }
+  4% { text-shadow:-5px 0 #f0f, 5px 0 #0ff; }
+}
+.living-manifesto {
+  font-size:clamp(1.4rem,4vw,2.4rem); margin:40px 0; line-height:1.6; opacity:0.9;
+  text-shadow:var(--matrix-glow);
+}
+.enter-reality {
+  display:inline-block; margin-top:40px; padding:16px 48px; background:transparent; color:var(--matrix);
+  border:2px solid var(--matrix); font-size:1.4rem; letter-spacing:4px; text-decoration:none;
+  box-shadow:var(--matrix-glow); transition:var(--transition);
+}
+.enter-reality:hover {
+  background:var(--matrix); color:#000; box-shadow:0 0 80px rgba(0,255,255,0.9);
+  transform:scale(1.1);
 }
 
-::-webkit-scrollbar { width: 8px; background: #000; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-core); }
+/* THE NINE PILLARS – SUPERNOVA GRID */
+.pillars-of-eternity {
+  position:relative; padding:100px 40px; z-index:10;
+}
+.section-header {
+  text-align:center; margin-bottom:80px;
+}
+.section-header .mono {
+  font-size:1.6rem; letter-spacing:6px; text-shadow:var(--matrix-glow);
+}
+.sentient-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(340px,1fr)); gap:30px; max-width:1600px; margin:0 auto;
+}
+.pillar-card {
+  position:relative; background:var(--glass); border:var(--glass-border); border-radius:16px; overflow:hidden;
+  padding:40px 30px; text-align:center; text-decoration:none; color:var(--matrix);
+  box-shadow:0 10px 40px rgba(0,0,0,0.6); transition:var(--transition);
+}
+.pillar-card::before {
+  content:''; position:absolute; inset:0; background:linear-gradient(135deg, transparent, rgba(0,255,255,0.1)); opacity:0; transition:var(--transition);
+}
+.pillar-card:hover::before { opacity:1; }
+.pillar-card:hover {
+  transform:translateY(-20px) scale(1.03); box-shadow:0 30px 80px rgba(0,255,255,0.4);
+}
+.pillar-glow {
+  position:absolute; inset:0; background:radial-gradient(circle at 50% -30%, var(--matrix), transparent 70%);
+  opacity:0; transition:var(--transition);
+}
+.pillar-card:hover .pillar-glow { opacity:0.4; }
+.pillar-card h3 {
+  font-family:'Orbitron', sans-serif; font-size:2rem; margin-bottom:16px; text-shadow:var(--matrix-glow);
+}
+.pillar-essence {
+  font-size:1.2rem; opacity:0.9; line-height:1.6;
+}
+.enter-portal {
+  display:block; margin-top:30px; font-size:1.4rem; color:var(--matrix); text-shadow:var(--matrix-glow);
+}
+.enter-portal.immortal { color:var(--immortal-pink); text-shadow:0 0 30px var(--immortal-pink); }
+.pillar-card.marilyn:hover { border-color:var(--immortal-pink); }
+.pillar-card.marilyn .pillar-glow.immortal { background:radial-gradient(circle at 50% -30%, var(--immortal-pink), transparent 70%); }
 
-/* ENGINES */
-#matrix-rain, #webgl-scene { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-#webgl-scene { z-index: -2; opacity: 0.6; }
-
-/* EFFECTS */
-.scanlines {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-    background-size: 100% 3px; z-index: 90; pointer-events: none; opacity: 0.2;
-}
-.vignette {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, transparent 60%, #000 150%);
-    z-index: 91; pointer-events: none;
-}
-
-/* HEADER */
-.hud-header {
-    position: fixed; top: 0; width: 100%; padding: 15px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-    z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
-    background: rgba(0,0,0,0.8);
-}
-.brand { font-family: var(--font-mono); font-weight: 700; letter-spacing: 1px; }
-.pulse { animation: pulse 2s infinite; color: var(--color-core); }
-.construction-banner {
-    border: 1px solid #ffaa00; background: rgba(255, 170, 0, 0.1);
-    color: #ffaa00; padding: 5px 15px; font-family: var(--font-mono);
-    font-size: 0.7rem; letter-spacing: 1px;
-}
-.nav-item { 
-    margin: 0 10px; text-decoration: none; color: #aaa; font-size: 0.8rem; 
-    font-family: var(--font-mono); transition: 0.3s;
-}
-.nav-item:hover { color: #fff; text-shadow: 0 0 8px var(--color-core); }
-
-/* HERO */
-.hero-section {
-    min-height: 100vh; display: flex; align-items: center; padding: 100px 20px;
-    position: relative; z-index: 10;
-}
-.status-badge {
-    border: 1px solid rgba(0, 243, 255, 0.3); padding: 5px 10px;
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-core);
-    display: inline-block; margin-bottom: 20px;
-}
-.status-badge.warning { border-color: #ffaa00; color: #ffaa00; }
-.mega-title {
-    font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 800; line-height: 0.9;
-    margin: 0 0 30px 0; text-transform: uppercase; letter-spacing: -2px;
-}
-.hero-artifact-container {
-    width: 100%; max-width: 600px; height: 400px; margin: 0 auto 30px;
-    border: 1px solid rgba(0, 243, 255, 0.2); 
-    background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
-    box-shadow: 0 0 50px rgba(0, 243, 255, 0.05);
-    border-radius: 4px; overflow: hidden;
-}
-#singularity-vessel canvas { width: 100% !important; height: 100% !important; outline: none; }
-.cta-btn {
-    padding: 15px 30px; background: var(--color-core); color: #000;
-    font-family: var(--font-mono); font-weight: bold; text-decoration: none;
-    display: inline-block; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
-}
-.cta-btn:hover { box-shadow: 0 0 20px var(--color-core); }
-
-/* GRID */
-.content-section { padding: 80px 20px; position: relative; z-index: 10; }
-.section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
-.line { flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1); }
-.bento-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-
-.glass-panel {
-    background: var(--glass); border: 1px solid var(--border);
-    padding: 25px; border-radius: 4px;
-    display: flex; flex-direction: column; justify-content: space-between;
-    min-height: 300px; position: relative;
-    opacity: 1 !important; transform: none !important; visibility: visible !important;
-    transition: border-color 0.3s ease, transform 0.3s ease !important;
-}
-
-/* PILLAR SPECIFIC HOVER EFFECTS */
-.glass-panel:hover { transform: translateY(-5px) !important; }
-.pillar-core:hover { border-color: var(--color-core); box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); }
-.pillar-flux:hover { border-color: var(--color-flux); box-shadow: 0 0 15px rgba(255, 0, 85, 0.1); }
-.pillar-aero:hover { border-color: var(--color-aero); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
-.pillar-nexus:hover { border-color: var(--color-nexus); box-shadow: 0 0 15px rgba(188, 19, 254, 0.1); }
-.pillar-cipher:hover { border-color: var(--color-cipher); box-shadow: 0 0 15px rgba(255, 170, 0, 0.1); }
-.pillar-prism:hover { border-color: var(--color-prism); box-shadow: 0 0 15px rgba(0, 255, 170, 0.1); }
-.pillar-omega:hover { border-color: var(--color-omega); box-shadow: 0 0 15px rgba(255, 85, 0, 0.1); }
-
-.cell-wide { grid-column: span 1; }
-
-.price-lock { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; }
-.buy-trigger {
-    background: #fff; color: #000; padding: 10px 20px; text-decoration: none;
-    font-weight: bold; font-family: var(--font-mono); font-size: 0.8rem; border: none;
-}
-.buy-trigger:hover { background: var(--color-core); }
-.dual-action { display: flex; gap: 10px; margin-top: 20px; }
-.xs-btn { font-size: 0.7rem; padding: 8px 12px; border: 1px solid #555; color: #fff; text-decoration: none; }
-.highlight { border-color: var(--color-core); color: var(--color-core); }
-
-.locked-panel { border-color: #333; opacity: 0.7; }
-.lock-overlay { position: absolute; top: 10px; right: 10px; color: #555; }
-.buy-trigger.disabled { background: #333; color: #888; pointer-events: none; }
-
-/* FORM */
-.form-container { width: 100%; margin: 0 auto; }
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-core); margin-bottom: 8px; }
-.form-group input, .form-group textarea {
-    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333;
-    padding: 15px; color: #fff; font-family: var(--font-mono); outline: none;
-}
-.submit-btn {
-    width: 100%; background: var(--color-core); color: #000; border: none;
-    padding: 15px; font-weight: bold; font-family: var(--font-mono); cursor: pointer;
-}
-
-/* CURSOR */
-.cursor-dot { width: 6px; height: 6px; background: var(--color-core); position: fixed; border-radius: 50%; z-index: 9999; pointer-events: none; }
-.cursor-circle { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3); position: fixed; border-radius: 50%; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
-
-/* ANIMATIONS */
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-.blink-fast { animation: blink 0.5s infinite; color: #ffaa00; }
-.glitch { position: relative; }
-.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.glitch::before { left: 2px; text-shadow: -1px 0 red; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
-.glitch::after { left: -2px; text-shadow: -1px 0 blue; clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 2.5s infinite linear alternate-reverse; }
-
-@media (min-width: 768px) {
-    .bento-grid { grid-template-columns: repeat(3, 1fr); }
-    .span-3 { grid-column: span 3; }
-    .hud-header { padding: 20px 40px; }
-    .hero-artifact-container { height: 400px; }
-}
+/* RESPONSIVE DOMINANCE */
+@media (max-width: 768px) {
+  .sentient-header { padding:15px 20px; flex-direction:column; gap:10px; }
+  .core-brand { font-size:1.8rem; }
+  .sentient-grid { grid-template-columns:1fr; }
+  .pillar-card { padding:30px 20px; }
+    }
