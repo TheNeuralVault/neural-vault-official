@@ -1,53 +1,112 @@
-// /// NEURAL MATRIX VAULT: SYSTEM INITIALIZATION ///
-console.log("%c/// GOD MODE ENGAGED: SYSTEM OPTIMAL", "color:#00f3ff; background:#000; padding:5px; border:1px solid #00f3ff;");
+console.log("%c/// NEURAL MATRIX VAULT: GOD MODE ///", "color:#00f3ff; background:#000; padding:5px; border:1px solid #00f3ff;");
 
-// 1. THE GOD ENGINE (MATRIX RAIN)
-const canvas = document.getElementById('matrix-rain');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    
-    // Resize Logic
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-    
-    const chars = "01XYZAMNBVC";
+const isMobile = window.innerWidth <= 768;
+
+// 1. MULTI-COLOR MATRIX RAIN (Blue > Green > White > Grey > Red)
+const mCanvas = document.getElementById('matrix-rain');
+if (mCanvas) {
+    const mCtx = mCanvas.getContext('2d');
+    mCanvas.width = window.innerWidth;
+    mCanvas.height = window.innerHeight;
+
+    const chars = "01XYZA".split("");
     const fontSize = 14;
-    const columns = width / fontSize;
+    const columns = mCanvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
+    
+    // REQUESTED ORDER: Blue, Green, White, Grey, Red
+    const palette = [
+        {r:0,g:243,b:255},   // Blue
+        {r:0,g:255,b:0},     // Green
+        {r:255,g:255,b:255}, // White
+        {r:128,g:128,b:128}, // Grey
+        {r:255,g:0,b:0}      // Red
+    ];
+    let time = 0;
 
-    function draw() {
-        // Semi-transparent black to create trail effect
-        ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
-        ctx.fillRect(0, 0, width, height);
+    function drawMatrix() {
+        // Trail effect
+        mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
+        mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
         
-        ctx.fillStyle = '#00f3ff'; // Neon Blue Text
-        ctx.font = fontSize + 'px monospace';
+        // Cycle colors
+        time += 0.005;
+        const colorIdx = Math.floor(time) % palette.length;
+        const c = palette[colorIdx];
         
+        mCtx.fillStyle = `rgb(${c.r},${c.g},${c.b})`;
+        mCtx.font = fontSize + "px monospace";
+
         for (let i = 0; i < drops.length; i++) {
             const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
             
-            // Random reset to top
-            if (drops[i] * fontSize > height && Math.random() > 0.985) {
+            if (drops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
                 drops[i] = 0;
             }
             drops[i]++;
         }
-        requestAnimationFrame(draw);
+        requestAnimationFrame(drawMatrix);
     }
+    drawMatrix();
+}
 
-    // Battery Saver: Only run if window is active
-    let isVisible = true;
-    document.addEventListener("visibilitychange", () => { isVisible = !document.hidden; });
-    
-    function loop() {
-        if(isVisible) draw();
-        else requestAnimationFrame(loop);
+// 2. THE 3D ARTIFACT (HERO)
+const artifactContainer = document.getElementById('singularity-vessel');
+if (artifactContainer) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, artifactContainer.clientWidth / artifactContainer.clientHeight, 0.1, 100);
+    camera.position.z = 6;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
+    renderer.setSize(artifactContainer.clientWidth, artifactContainer.clientHeight);
+    artifactContainer.appendChild(renderer.domElement);
+
+    const geometry = new THREE.IcosahedronGeometry(1.5, 0);
+    const material = new THREE.MeshPhongMaterial({
+        color: 0x000000, 
+        emissive: 0x111111,
+        flatShading: true,
+        shininess: 100
+    });
+    const core = new THREE.Mesh(geometry, material);
+    scene.add(core);
+
+    const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
+    const wireMat = new THREE.MeshBasicMaterial({ color: 0x00f3ff, wireframe: true, transparent: true, opacity: 0.3 });
+    const cage = new THREE.Mesh(wireGeo, wireMat);
+    scene.add(cage);
+
+    const l1 = new THREE.PointLight(0x00f3ff, 2, 10); l1.position.set(3, 2, 3); scene.add(l1);
+    const l2 = new THREE.PointLight(0xff0055, 2, 10); l2.position.set(-3, -2, 3); scene.add(l2);
+
+    function animateArtifact() {
+        requestAnimationFrame(animateArtifact);
+        core.rotation.y += 0.004;
+        core.rotation.x -= 0.002;
+        cage.rotation.y -= 0.002;
+        renderer.render(scene, camera);
     }
-    loop();
+    animateArtifact();
 
     window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+        camera.aspect = artifactContainer.clientWidth / artifactContainer.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(artifactContainer.clientWidth, artifactContainer.clientHeight);
     });
 }
+
+// 3. UI ANIMATIONS
+try {
+    const lenis = new Lenis({ duration: 1.2, smooth: true });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    
+    lucide.createIcons();
+    
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(".cell", {
+        y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: 0.5
+    });
+
+} catch(e) {}
