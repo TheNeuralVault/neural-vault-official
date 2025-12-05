@@ -5,129 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE NEURAL CORE | 3D WebGL Architecture</title>
     
-    <!-- /// GOOGLE TAG (MANDATORY) /// -->
+    <!-- GOOGLE TAG -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-P1PCVNCCE4');
-    </script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
 
-    <meta name="description" content="The Neural Core: Flagship 3D Website Architecture using Three.js and WebGL for maximum brand dominance.">
+    <meta name="description" content="The Neural Core. Flagship 3D Website Architecture.">
     
-    <!-- GLOBAL + LOCAL ASSETS -->
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="neural.css">
+    <!-- ASSETS -->
+    <link rel="stylesheet" href="../style.css"> <!-- Global -->
+    <link rel="stylesheet" href="neural.css">   <!-- Local -->
+    
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     
-    <!-- 3D PARTICLE BRAIN ENGINE -->
+    <!-- 3D SYNAPTIC ENGINE -->
     <div id="neural-canvas"></div>
+    <div class="scanlines"></div>
 
     <header class="hud-header">
-        <div class="brand"><a href="../index.html">← HUB</a> / NEURAL_CORE</div>
-        <div class="status-indicator" style="border-color:#00f3ff; color:#00f3ff;">SYSTEM_ACTIVE</div>
+        <div class="brand"><a href="../index.html">← SYSTEM_HUB</a> / NEURAL_CORE</div>
+        <div class="status-indicator">SECTOR_ONLINE</div>
     </header>
 
     <main>
         <section class="hero-section">
-            <h1 class="mega-title" style="color:#00f3ff; text-shadow:0 0 30px rgba(0,243,255,0.5);">NEURAL CORE</h1>
+            <div class="glitch-wrapper">
+                <h1 class="mega-title glitch" data-text="NEURAL_CORE">NEURAL_CORE</h1>
+            </div>
             <p class="hero-sub">The Flagship Protocol. <br><span class="highlight">Total Digital Transformation.</span></p>
         </section>
 
-        <!-- TRANSLATION TERMINAL -->
-        <section class="glass-panel terminal-board">
+        <!-- INTEL TERMINAL -->
+        <section class="terminal-wrapper">
             <div class="terminal-header">
-                <button onclick="toggleLang('plain')" class="term-btn active" id="btn-plain">PLAIN ENGLISH</button>
-                <button onclick="toggleLang('tech')" class="term-btn" id="btn-tech">TECH SPEAK</button>
+                <div class="tab active" onclick="switchTab('plain', this)">STRATEGY</div>
+                <div class="tab" onclick="switchTab('tech', this)">TECHNICAL</div>
             </div>
             
-            <div id="content-plain" class="term-content">
-                <h3>/// THE OVERVIEW</h3>
-                <p>This is a complete website overhaul. We build you a stunning, 3D animated website that loads instantly and ranks #1 on Google. It turns visitors into high-ticket clients by proving you are the premium option in your market.</p>
+            <div id="content-plain" class="terminal-body">
+                <h3>/// DOMINANCE PROTOCOL</h3>
+                <p>This is not just a website; it is a weapon of mass attention. We deploy a 3D-accelerated digital territory that loads instantly and ranks #1. It signals to your market that you are the Apex Predator.</p>
             </div>
             
-            <div id="content-tech" class="term-content" style="display:none;">
-                <h3>/// TECHNICAL SPECIFICATIONS</h3>
-                <p>A WebGL-accelerated DOM structure utilizing Three.js for high-frequency visual retention. Includes Semantic HTML5 scaffolding for crawler dominance, aggregated JSON-LD Schema, and asynchronous server-side rendering (SSR).</p>
+            <div id="content-tech" class="terminal-body" style="display:none;">
+                <h3>/// SYSTEM ARCHITECTURE</h3>
+                <p>WebGL-accelerated DOM manipulation via Three.js. Semantic HTML5 scaffolding for crawler dominance. Asynchronous Server-Side Rendering (SSR) for < 50ms TTI. 100/100 Lighthouse Performance Score.</p>
             </div>
         </section>
 
-        <!-- TIER GRID -->
+        <!-- ARCHITECTURE SELECTION GRID -->
         <section class="portal-grid">
             
             <!-- TIER 1: INITIATE -->
-            <div class="portal-card neural-theme">
-                <div class="card-text">
-                    <h3 style="color:#00f3ff">INITIATE</h3>
-                    <p class="mono">$1,500</p>
-                    
-                    <p style="font-size:0.7rem; color:#fff; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                        <strong>STRATEGY:</strong> High-performance static portfolio.
-                    </p>
-
-                    <ul class="specs">
-                        <li>5-Page Static Architecture</li>
-                        <li>Standard SEO Pack</li>
-                        <li>Mobile Responsive Layout</li>
-                    </ul>
-                    <!-- LINKS TO THE LIVE SITE EXPERIENCE -->
-                    <a href="initiate.html" class="btn-enter">ENTER ARCHITECTURE</a>
+            <div class="portal-card neural-card">
+                <div class="card-header">
+                    <h3>INITIATE</h3>
+                    <span class="price">$1,500</span>
                 </div>
+                <div class="card-body">
+                    <p class="strategy"><strong>TARGET:</strong> High-Performance Static Portfolio.</p>
+                    <ul class="specs">
+                        <li>Zero-Latency Architecture</li>
+                        <li>Semantic SEO Structure</li>
+                        <li>Mobile-First Physics</li>
+                    </ul>
+                </div>
+                <a href="initiate.html" class="btn-sector">ENTER ARCHITECTURE</a>
             </div>
 
             <!-- TIER 2: OPERATOR -->
-            <div class="portal-card neural-theme" style="border-color:#00f3ff; box-shadow:0 0 20px rgba(0,243,255,0.2);">
-                <div class="card-text">
-                    <h3 style="color:#fff">OPERATOR</h3>
-                    <p class="mono" style="color:#00f3ff">$2,500</p>
-                    
-                    <p style="font-size:0.7rem; color:#fff; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                        <strong>STRATEGY:</strong> 3D Visual Dominance & CMS.
-                    </p>
-
-                    <ul class="specs">
-                        <li style="color:#00f3ff">>> WebGL 3D Elements</li>
-                        <li>Content Management System</li>
-                        <li>Advanced Schema & Meta Data</li>
-                    </ul>
-                    <a href="operator.html" class="btn-enter" style="background:#00f3ff; color:#000;">ENTER ARCHITECTURE</a>
+            <div class="portal-card neural-card highlight-card">
+                <div class="card-header">
+                    <h3>OPERATOR</h3>
+                    <span class="price">$2,500</span>
                 </div>
+                <div class="card-body">
+                    <p class="strategy"><strong>TARGET:</strong> 3D Visual Dominance & CMS.</p>
+                    <ul class="specs">
+                        <li style="color:#00f3ff">>> WebGL Liquid Engine</li>
+                        <li>Content Management System</li>
+                        <li>Dynamic Interaction Model</li>
+                    </ul>
+                </div>
+                <a href="operator.html" class="btn-sector filled">ENTER ARCHITECTURE</a>
             </div>
 
             <!-- TIER 3: TITAN -->
-            <div class="portal-card neural-theme">
-                <div class="card-text">
-                    <h3 style="color:#00f3ff">TITAN</h3>
-                    <p class="mono">$5,000+</p>
-                    
-                    <p style="font-size:0.7rem; color:#fff; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                        <strong>STRATEGY:</strong> Autonomous AI Business Systems.
-                    </p>
-
-                    <ul class="specs">
-                        <li>Full Custom Javascript Web App</li>
-                        <li>AI Chatbot Agent Integration</li>
-                        <li>Competitor Nuke Protocol</li>
-                    </ul>
-                    <a href="titan.html" class="btn-enter">ENTER ARCHITECTURE</a>
+            <div class="portal-card neural-card">
+                <div class="card-header">
+                    <h3>TITAN</h3>
+                    <span class="price">$5,000+</span>
                 </div>
+                <div class="card-body">
+                    <p class="strategy"><strong>TARGET:</strong> Autonomous AI Business Systems.</p>
+                    <ul class="specs">
+                        <li>Custom Web Application</li>
+                        <li>AI Agent Integration</li>
+                        <li>Database Sovereignty</li>
+                    </ul>
+                </div>
+                <a href="titan.html" class="btn-sector">ENTER ARCHITECTURE</a>
             </div>
+
         </section>
     </main>
 
     <script src="neural.js"></script>
-    <script>
-        lucide.createIcons();
-        function toggleLang(type) {
-            document.getElementById('content-plain').style.display = type === 'plain' ? 'block' : 'none';
-            document.getElementById('content-tech').style.display = type === 'tech' ? 'block' : 'none';
-            document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
-            document.getElementById('btn-tech').classList.toggle('active', type === 'tech');
-        }
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
