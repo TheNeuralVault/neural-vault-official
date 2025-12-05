@@ -3,50 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEPLOY INITIATE | Neural Core</title>
+    <title>INITIATE | Neural Core</title>
     
     <!-- GOOGLE TAG -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P1PCVNCCE4');
+    </script>
 
+    <!-- SEO -->
+    <meta name="description" content="Neural Core Initiate Tier. High-performance static architecture.">
+    
+    <!-- ASSETS -->
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="neural.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* INITIATE SPECIFIC PHYSICS */
+        body { background: #050505; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        .smooth-wrapper { width: 100%; }
+        
+        /* HERO TYPOGRAPHY */
+        .hero-text { font-size: 12vw; line-height: 0.9; font-weight: 800; color: #fff; mix-blend-mode: difference; }
+        .hero-container { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+        
+        /* PARALLAX ELEMENTS */
+        .floating-img { position: absolute; width: 300px; height: 400px; background: #111; border: 1px solid #333; opacity: 0.5; z-index: 1; }
+        
+        /* WELCOME CARD (The Overlay) */
+        .welcome-modal { position: fixed; bottom: 30px; right: 30px; width: 350px; background: rgba(10,10,10,0.9); border: 1px solid #333; padding: 25px; backdrop-filter: blur(20px); z-index: 100; border-left: 4px solid #fff; animation: slideIn 1s cubic-bezier(0.19, 1, 0.22, 1); }
+        
+        @keyframes slideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .deploy-btn { display: block; width: 100%; background: #fff; color: #000; padding: 15px; font-weight: bold; text-align: center; text-decoration: none; margin-top: 15px; transition: 0.3s; }
+        .deploy-btn:hover { background: #ccc; letter-spacing: 2px; }
+
+        /* FORM OVERLAY (Hidden by default) */
+        .form-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 200; display: none; justify-content: center; align-items: center; }
+        .close-form { position: absolute; top: 30px; right: 30px; color: #fff; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <div id="neural-canvas"></div> <!-- Reusing the 3D background -->
 
-    <header class="hud-header">
-        <div class="brand"><a href="index.html">← BACK</a> / DEPLOY_INITIATE</div>
-    </header>
+    <!-- WELCOME CARD -->
+    <div class="welcome-modal">
+        <h3 style="margin:0; color:#fff; font-size:1rem;">SYSTEM: INITIATE</h3>
+        <p style="color:#888; font-size:0.8rem; margin:10px 0;">You are viewing the Initiate Architecture. Clean. Fast. Static. This is the standard for high-performance portfolios.</p>
+        <button onclick="openForm()" class="deploy-btn">DEPLOY THIS BUILD ($1,500)</button>
+    </div>
 
-    <main style="max-width: 600px; margin: 120px auto; padding: 20px;">
-        <div class="glass-panel" style="border-top: 4px solid #00f3ff;">
-            <h2 class="mega-title" style="font-size: 2rem; margin-bottom: 10px;">INITIATE PROTOCOL</h2>
-            <p class="mono" style="color:#00f3ff; margin-bottom: 30px;">TARGET: NEURAL CORE (TIER 1) // $1,500</p>
-            
+    <!-- LIVE SITE CONTENT -->
+    <div class="smooth-wrapper">
+        <nav style="position:fixed; top:0; width:100%; padding:30px; display:flex; justify-content:space-between; mix-blend-mode:difference; z-index:10;">
+            <a href="../index.html" style="color:#fff; font-weight:bold; text-decoration:none;">← EXIT</a>
+            <span style="color:#fff;">MENU</span>
+        </nav>
+
+        <section class="hero-container">
+            <div class="floating-img" style="top:10%; left:10%; transform: rotate(-5deg);"></div>
+            <div class="floating-img" style="bottom:10%; right:10%; transform: rotate(5deg);"></div>
+            <h1 class="hero-text">PURE<br>STATIC<br>POWER.</h1>
+        </section>
+
+        <section style="padding: 100px 20px; max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 3rem; color: #fff;">Zero Bloat.</h2>
+            <p style="font-size: 1.5rem; color: #888; line-height: 1.6;">
+                The Initiate Protocol strips away the unnecessary. We deliver semantic HTML5, optimized CSS3, and zero-latency loading speeds. This is for the purist.
+            </p>
+        </section>
+    </div>
+
+    <!-- DEPLOYMENT FORM -->
+    <div class="form-overlay" id="deployForm">
+        <div class="close-form" onclick="closeForm()"><i data-lucide="x" size="40"></i></div>
+        <div class="glass-panel" style="width: 90%; max-width: 500px; border-top: 4px solid #fff;">
+            <h2 style="color:#fff;">SECURE INITIATE</h2>
             <form action="https://formspree.io/f/mblndgrz" method="POST">
-                <!-- HIDDEN TRACKING -->
-                <input type="hidden" name="project_type" value="NEURAL_CORE_INITIATE">
-                
-                <div style="margin-bottom: 20px;">
-                    <label class="mono" style="font-size:0.7rem; color:#888; display:block; margin-bottom:5px;">IDENTITY (NAME)</label>
-                    <input type="text" name="name" required style="width:100%; padding:15px; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; font-family:inherit;">
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label class="mono" style="font-size:0.7rem; color:#888; display:block; margin-bottom:5px;">DIGITAL_ID (EMAIL)</label>
-                    <input type="email" name="email" required style="width:100%; padding:15px; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; font-family:inherit;">
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label class="mono" style="font-size:0.7rem; color:#888; display:block; margin-bottom:5px;">PARAMETERS (MESSAGE)</label>
-                    <textarea name="message" rows="4" style="width:100%; padding:15px; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; font-family:inherit;"></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn" style="width:100%; background:#00f3ff; color:#000;">AUTHORIZE DEPLOYMENT</button>
+                <input type="hidden" name="product" value="NEURAL_CORE_INITIATE">
+                <input type="text" name="name" placeholder="NAME" required style="width:100%; padding:15px; margin-bottom:15px; background:#111; border:1px solid #333; color:#fff;">
+                <input type="email" name="email" placeholder="EMAIL" required style="width:100%; padding:15px; margin-bottom:15px; background:#111; border:1px solid #333; color:#fff;">
+                <button type="submit" class="deploy-btn">CONFIRM ($1,500)</button>
             </form>
         </div>
-    </main>
-    <script src="neural.js"></script>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function openForm() { document.getElementById('deployForm').style.display = 'flex'; }
+        function closeForm() { document.getElementById('deployForm').style.display = 'none'; }
+    </script>
 </body>
 </html>
