@@ -4,30 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LEGAL PROTOCOLS | Neural Matrix Vault</title>
-    <link rel="stylesheet" href="style.css">
     
-    <!-- GOOGLE TAG -->
+    <!-- /// 1. GOOGLE TAG (MANDATORY) /// -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P1PCVNCCE4');
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    
+    <!-- VISUAL ENGINE (Background Only) -->
+    <div id="canvas-container">
+        <div class="overlay-scanlines"></div>
+        <div class="overlay-vignette"></div>
+    </div>
+
     <header class="hud-header">
-        <div class="brand"><a href="index.html">← RETURN</a> / LEGAL</div>
+        <div class="brand"><a href="index.html">← RETURN_TO_HUB</a></div>
+        <div class="status-indicator">LEGAL_ARCHIVES</div>
     </header>
 
     <main style="max-width: 800px; margin: 120px auto; padding: 20px;">
-        <h1 class="mega-title" style="font-size: 3rem;">TERMS OF SERVICE</h1>
         
-        <div class="glass-panel" style="margin-top: 40px; line-height: 1.8; color: #ccc;">
-            <h3>1. NATURE OF SERVICES</h3>
-            <p>Neural Matrix Vault ("The Agency") provides software development services, website architecture, and digital design assets. We are a creative agency, not a financial institution.</p>
-            
-            <h3>2. NO FINANCIAL ADVICE</h3>
-            <p>Nothing on this website constitutes financial advice. Terms such as "Asset," "Deploy," or "Vault" are used in a technical software context (e.g., "Deploying Code"). We do not sell securities, cryptocurrencies, or investment products.</p>
-            
-            <h3>3. REFUND POLICY</h3>
-            <p>Due to the proprietary nature of our code and digital assets, all deployments are final once the source code has been transmitted to the client.</p>
+        <div class="section-header">
+            <span class="mono">/// TERMS_OF_SERVICE</span>
+            <div class="line"></div>
         </div>
+
+        <div class="glass-panel" style="min-height: auto;">
+            <h1 style="margin-top: 0; color: #00f3ff;">OPERATIONAL DISCLAIMER</h1>
+            
+            <div style="font-family: 'Space Mono', monospace; font-size: 0.85rem; color: #ccc; line-height: 1.8;">
+                <p><strong>1. IDENTITY & NATURE OF BUSINESS</strong><br>
+                Neural Matrix Vault ("The Agency") is a premium software development and web design firm. We provide digital architecture, HTML/CSS code packages, and consulting services. We are <strong>not</strong> a bank, financial institution, investment firm, or cryptocurrency exchange.</p>
+
+                <p><strong>2. TERMINOLOGY CLARIFICATION</strong><br>
+                Terms used on this site such as "Vault," "Asset," "Deploy," "Protocol," and "Fortress" are used strictly in a <strong>software engineering context</strong>. "Asset" refers to digital design files (images/code). "Invest" refers to purchasing business software.</p>
+
+                <p><strong>3. NO FINANCIAL ADVICE</strong><br>
+                Nothing on this website constitutes financial advice. We do not accept deposits for investment purposes. All payments are in exchange for tangible digital goods and development hours.</p>
+
+                <p><strong>4. REFUND POLICY</strong><br>
+                Due to the proprietary nature of our source code ("The Titanium Stack"), all sales are final once the code has been transmitted or deployed to the client's server.</p>
+
+                <p><strong>5. GOVERNING LAW</strong><br>
+                These protocols are governed by the laws of the United States. Any disputes regarding code quality or delivery will be handled via standard arbitration.</p>
+            </div>
+
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p class="mono" style="font-size: 0.7rem; color: #666;">LAST UPDATED: 2025 // SYSTEM_LOG_99</p>
+            </div>
+        </div>
+
     </main>
+
+    <script>lucide.createIcons();</script>
 </body>
 </html>
