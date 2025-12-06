@@ -196,4 +196,4 @@ h1 {
 @media (max-width: 768px) {
     h1 { font-size: 18vw; }
     .purchase-dock { flex-direction: column; gap: 20px; align-items: stretch; text-align: center; }
-  }
+}
