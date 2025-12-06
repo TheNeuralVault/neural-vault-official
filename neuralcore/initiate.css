@@ -7,13 +7,16 @@
     --font-code: 'Space Mono', monospace;
 }
 
+html {
+    background-color: var(--obsidian); /* Background goes on HTML, not Body */
+}
+
 body {
     margin: 0;
-    background-color: var(--obsidian);
+    background-color: transparent; /* Allows Canvas to show through */
     color: var(--titanium);
     font-family: var(--font-hero);
     overflow-x: hidden;
-    cursor: crosshair;
 }
 
 #gl-viewport {
@@ -22,7 +25,8 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: -1; /* Sits behind content */
+    background: radial-gradient(circle at center, #111 0%, #000 100%); /* Fallback if WebGL fails */
 }
 
 /* HUD NAVIGATION */
@@ -30,7 +34,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,9 +48,7 @@ body {
     font-family: var(--font-code);
     font-size: 0.8rem;
     letter-spacing: 2px;
-    transition: opacity 0.3s;
 }
-.back-link:hover { opacity: 0.7; }
 
 .sys-status {
     font-family: var(--font-code);
@@ -61,20 +63,19 @@ body {
 }
 
 .chapter {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 0 10vw;
-    opacity: 0; /* Handled by JS */
-    transform: translateY(50px);
+    padding: 0 20px;
+    /* Removed opacity: 0 to prevent permanent invisibility */
 }
 
 .right-align { justify-content: flex-end; text-align: right; }
 .center-align { justify-content: center; text-align: center; }
 
 h1 {
-    font-size: 12vw;
-    line-height: 0.85;
+    font-size: 15vw;
+    line-height: 0.9;
     margin: 0;
     font-weight: 800;
     letter-spacing: -0.04em;
@@ -85,7 +86,7 @@ h1 {
 .mono-sub {
     font-family: var(--font-code);
     color: #888;
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 1rem;
     line-height: 1.5;
 }
@@ -98,9 +99,9 @@ h1 {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 30px 50px;
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(20px);
+    padding: 20px;
+    background: rgba(5, 5, 5, 0.9);
+    backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
@@ -109,91 +110,48 @@ h1 {
 }
 
 .meta-info { display: flex; flex-direction: column; }
-.label { font-family: var(--font-code); font-size: 0.7rem; color: #666; }
-.value { font-family: var(--font-code); font-size: 1.5rem; color: #fff; font-weight: 700; }
+.label { font-family: var(--font-code); font-size: 0.6rem; color: #666; }
+.value { font-family: var(--font-code); font-size: 1.2rem; color: #fff; font-weight: 700; }
 
 .titan-btn {
     background: #fff;
     color: #000;
     border: none;
-    padding: 20px 40px;
+    padding: 15px 25px;
     font-family: var(--font-code);
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-}
-
-.titan-btn:hover {
-    background: var(--signal);
-    box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
-    transform: translateY(-2px);
 }
 
 /* MODAL PHYSICS */
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.95);
-    z-index: 100;
-    display: none;
-    justify-content: center;
-    align-items: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95); z-index: 100;
+    display: none; justify-content: center; align-items: center;
 }
 
 .modal-frame {
-    width: 100%;
-    max-width: 500px;
-    background: #000;
-    border: 1px solid var(--signal);
-    padding: 60px;
-    position: relative;
-    box-shadow: 0 0 100px rgba(0, 243, 255, 0.1);
+    width: 90%; max-width: 500px;
+    background: #000; border: 1px solid var(--signal);
+    padding: 30px; position: relative;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 15px;
 }
 
-.modal-header h3 { margin: 0; font-family: var(--font-code); color: var(--signal); letter-spacing: 2px; }
-.close-icon { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+.modal-header h3 { margin: 0; font-family: var(--font-code); color: var(--signal); }
+.close-icon { background: none; border: none; color: #fff; font-size: 2rem; }
 
-.input-group { position: relative; margin-bottom: 40px; }
-.input-group label {
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-family: var(--font-code);
-    font-size: 0.7rem;
-    color: #666;
-}
-
+.input-group { margin-bottom: 30px; }
+.input-group label { display: block; font-family: var(--font-code); font-size: 0.7rem; color: #666; margin-bottom: 5px; }
 .input-group input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #333;
-    color: #fff;
-    font-family: var(--font-hero);
-    font-size: 1.5rem;
-    padding: 10px 0;
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1px solid #333; color: #fff;
+    font-family: var(--font-hero); font-size: 1.2rem; padding: 10px 0;
     outline: none;
-    transition: 0.3s;
 }
-
-.input-group input:focus { border-bottom-color: var(--signal); }
 .full { width: 100%; }
-
-@media (max-width: 768px) {
-    h1 { font-size: 18vw; }
-    .purchase-dock { flex-direction: column; gap: 20px; align-items: stretch; text-align: center; }
-}
