@@ -1,112 +1,235 @@
-console.log("%c/// NEURAL MATRIX VAULT: GOD MODE ///", "color:#00f3ff; background:#000; padding:5px; border:1px solid #00f3ff;");
+/* 
+   ================================================================
+   NEURAL MATRIX VAULT | CORE SYSTEM v9.0
+   ARCHITECT: MAGNUS OPUS
+   DIRECTIVE: UNCOMPROMISING FIDELITY
+   ================================================================
+*/
 
-const isMobile = window.innerWidth <= 768;
+console.log("%c/// SYSTEM INITIALIZATION: GOD MODE ///", "background:#000; color:#00f3ff; padding:10px; border:1px solid #00f3ff;");
 
-// 1. MULTI-COLOR MATRIX RAIN (Blue > Green > White > Grey > Red)
-const mCanvas = document.getElementById('matrix-rain');
-if (mCanvas) {
-    const mCtx = mCanvas.getContext('2d');
-    mCanvas.width = window.innerWidth;
-    mCanvas.height = window.innerHeight;
+// --- CONFIGURATION ---
+const CONFIG = {
+    isMobile: window.innerWidth <= 768,
+    dpr: Math.min(window.devicePixelRatio, 2),
+    colors: {
+        blue: {r:0,g:243,b:255},
+        green: {r:0,g:255,b:0},
+        white: {r:255,g:255,b:255},
+        grey: {r:128,g:128,b:128},
+        red: {r:255,g:0,b:0}
+    }
+};
 
-    const chars = "01XYZA".split("");
-    const fontSize = 14;
-    const columns = mCanvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    
-    // REQUESTED ORDER: Blue, Green, White, Grey, Red
-    const palette = [
-        {r:0,g:243,b:255},   // Blue
-        {r:0,g:255,b:0},     // Green
-        {r:255,g:255,b:255}, // White
-        {r:128,g:128,b:128}, // Grey
-        {r:255,g:0,b:0}      // Red
-    ];
-    let time = 0;
-
-    function drawMatrix() {
-        // Trail effect
-        mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
-        mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+// --- MODULE 1: CHROMATIC MATRIX ENGINE ---
+class MatrixEngine {
+    constructor() {
+        this.canvas = document.getElementById('matrix-rain');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.resize();
         
-        // Cycle colors
-        time += 0.005;
-        const colorIdx = Math.floor(time) % palette.length;
-        const c = palette[colorIdx];
+        this.chars = "01XYZA".split("");
+        this.drops = [];
+        this.initDrops();
         
-        mCtx.fillStyle = `rgb(${c.r},${c.g},${c.b})`;
-        mCtx.font = fontSize + "px monospace";
+        // The 5-Color Cycle Palette
+        this.palette = [
+            CONFIG.colors.blue,
+            CONFIG.colors.green,
+            CONFIG.colors.white,
+            CONFIG.colors.grey,
+            CONFIG.colors.red
+        ];
+        this.time = 0;
+        
+        window.addEventListener('resize', () => { this.resize(); this.initDrops(); });
+        this.animate();
+    }
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.fontSize = 14;
+        this.columns = this.canvas.width / this.fontSize;
+    }
+
+    initDrops() {
+        this.drops = Array(Math.floor(this.columns)).fill(1);
+    }
+
+    getColor() {
+        // Algorithmic Color Cycling
+        this.time += 0.005;
+        const idx = Math.floor(this.time) % this.palette.length;
+        const c = this.palette[idx];
+        return `rgb(${c.r},${c.g},${c.b})`;
+    }
+
+    animate() {
+        // Trail Effect
+        this.ctx.fillStyle = "rgba(5, 5, 5, 0.05)";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.ctx.fillStyle = this.getColor();
+        this.ctx.font = this.fontSize + "px monospace";
+
+        for (let i = 0; i < this.drops.length; i++) {
+            const text = this.chars[Math.floor(Math.random() * this.chars.length)];
+            this.ctx.fillText(text, i * this.fontSize, this.drops[i] * this.fontSize);
             
-            if (drops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+            if (this.drops[i] * this.fontSize > this.canvas.height && Math.random() > 0.975) {
+                this.drops[i] = 0;
             }
-            drops[i]++;
+            this.drops[i]++;
         }
-        requestAnimationFrame(drawMatrix);
+        requestAnimationFrame(() => this.animate());
     }
-    drawMatrix();
 }
 
-// 2. THE 3D ARTIFACT (HERO)
-const artifactContainer = document.getElementById('singularity-vessel');
-if (artifactContainer) {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, artifactContainer.clientWidth / artifactContainer.clientHeight, 0.1, 100);
-    camera.position.z = 6;
+// --- MODULE 2: SINGULARITY ENGINE (3D PBR) ---
+class SingularityEngine {
+    constructor() {
+        this.container = document.getElementById('singularity-vessel');
+        if (!this.container) return;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
-    renderer.setSize(artifactContainer.clientWidth, artifactContainer.clientHeight);
-    artifactContainer.appendChild(renderer.domElement);
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(50, this.container.clientWidth / this.container.clientHeight, 0.1, 100);
+        this.camera.position.z = 6;
 
-    const geometry = new THREE.IcosahedronGeometry(1.5, 0);
-    const material = new THREE.MeshPhongMaterial({
-        color: 0x000000, 
-        emissive: 0x111111,
-        flatShading: true,
-        shininess: 100
-    });
-    const core = new THREE.Mesh(geometry, material);
-    scene.add(core);
+        this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !CONFIG.isMobile });
+        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+        this.renderer.setPixelRatio(CONFIG.dpr);
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping; // Cinematic Tone Mapping
+        this.container.appendChild(this.renderer.domElement);
 
-    const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
-    const wireMat = new THREE.MeshBasicMaterial({ color: 0x00f3ff, wireframe: true, transparent: true, opacity: 0.3 });
-    const cage = new THREE.Mesh(wireGeo, wireMat);
-    scene.add(cage);
+        this.initLights();
+        this.initArtifact();
+        this.animate();
 
-    const l1 = new THREE.PointLight(0x00f3ff, 2, 10); l1.position.set(3, 2, 3); scene.add(l1);
-    const l2 = new THREE.PointLight(0xff0055, 2, 10); l2.position.set(-3, -2, 3); scene.add(l2);
-
-    function animateArtifact() {
-        requestAnimationFrame(animateArtifact);
-        core.rotation.y += 0.004;
-        core.rotation.x -= 0.002;
-        cage.rotation.y -= 0.002;
-        renderer.render(scene, camera);
+        window.addEventListener('resize', () => this.handleResize());
     }
-    animateArtifact();
 
-    window.addEventListener('resize', () => {
-        camera.aspect = artifactContainer.clientWidth / artifactContainer.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(artifactContainer.clientWidth, artifactContainer.clientHeight);
-    });
+    initLights() {
+        const ambient = new THREE.AmbientLight(0x222222);
+        this.scene.add(ambient);
+
+        const l1 = new THREE.PointLight(0x00f3ff, 2, 20);
+        l1.position.set(3, 3, 3);
+        this.scene.add(l1);
+
+        const l2 = new THREE.PointLight(0xff0055, 2, 20);
+        l2.position.set(-3, -3, 3);
+        this.scene.add(l2);
+    }
+
+    initArtifact() {
+        // PBR Material for Titanium Look
+        const geometry = new THREE.IcosahedronGeometry(1.5, 1); // Subdivided for detail
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0x111111,
+            metalness: 0.9,
+            roughness: 0.2,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            flatShading: true
+        });
+        this.core = new THREE.Mesh(geometry, material);
+        this.scene.add(this.core);
+
+        // Wireframe Cage
+        const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
+        const wireMat = new THREE.MeshBasicMaterial({ 
+            color: 0x00f3ff, 
+            wireframe: true, 
+            transparent: true, 
+            opacity: 0.15 
+        });
+        this.cage = new THREE.Mesh(wireGeo, wireMat);
+        this.scene.add(this.cage);
+        
+        // Quaternion for Rotation Axis
+        this.axis = new THREE.Vector3(0, 1, 0).normalize();
+    }
+
+    animate() {
+        requestAnimationFrame(() => this.animate());
+        
+        // Algorithmic Rotation using Quaternions (Implicit in Three.js rotation helpers)
+        this.core.rotation.y += 0.004;
+        this.core.rotation.x -= 0.002;
+        this.cage.rotation.y -= 0.002;
+        
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    handleResize() {
+        this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    }
 }
 
-// 3. UI ANIMATIONS
-try {
-    const lenis = new Lenis({ duration: 1.2, smooth: true });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    
-    lucide.createIcons();
-    
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.from(".cell", {
-        y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: 0.5
-    });
+// --- MODULE 3: INTERFACE CONTROLLER ---
+class InterfaceController {
+    constructor() {
+        this.initScroll();
+        this.initIcons();
+        this.initAnimations();
+        this.initCursor();
+    }
 
-} catch(e) {}
+    initScroll() {
+        try {
+            const lenis = new Lenis({ duration: 1.2, smooth: true });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+        } catch(e) {}
+    }
+
+    initIcons() {
+        try { lucide.createIcons(); } catch(e) {}
+    }
+
+    initAnimations() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Staggered Entrance for Pillars
+        gsap.from(".cell", {
+            y: 60, 
+            opacity: 0, 
+            duration: 1, 
+            stagger: 0.1, 
+            ease: "power3.out", 
+            delay: 0.2
+        });
+    }
+
+    initCursor() {
+        if (!CONFIG.isMobile) {
+            const dot = document.querySelector('.cursor-dot');
+            const circ = document.querySelector('.cursor-circle');
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
+                gsap.to(circ, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+            });
+        }
+    }
+}
+
+// --- SYSTEM BOOT ---
+window.onload = () => {
+    new MatrixEngine();
+    new SingularityEngine();
+    new InterfaceController();
+};
+
+// --- GLOBAL UTILS ---
+window.prefill = function(product) {
+    const field = document.getElementById('product-field');
+    const form = document.getElementById('contact');
+    if(field && form) {
+        field.value = product;
+        form.scrollIntoView({ behavior: 'smooth' });
+    }
+};
