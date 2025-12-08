@@ -1,4 +1,4 @@
-// /// CREATOR LOGIC ///
+// /// CREATOR LOGIC ///ppimk9 primary 
 
 // 1. SMOOTH SCROLL
 const lenis = new Lenis();
