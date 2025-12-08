@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE NEURAL CORE | 3D WebGL Architecture</title>
+    <title>THE NEURAL CORE | Command</title>
     
     <!-- GOOGLE TAG -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
 
-    <meta name="description" content="The Neural Core. Flagship 3D Website Architecture.">
-    
-    <!-- ASSETS -->
-    <link rel="stylesheet" href="../style.css"> <!-- Global -->
-    <link rel="stylesheet" href="neural.css">   <!-- Local -->
-    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="neural.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     
-    <!-- 3D SYNAPTIC ENGINE -->
     <div id="neural-canvas"></div>
     <div class="scanlines"></div>
 
     <header class="hud-header">
-        <div class="brand"><a href="../index.html">← SYSTEM_HUB</a> / NEURAL_CORE</div>
-        <div class="status-indicator">SECTOR_ONLINE</div>
+        <div class="brand"><a href="../index.html">← HUB</a> / NEURAL_CORE</div>
+        <div class="status-indicator" style="border-color:#00f3ff; color:#00f3ff;">SECTOR_ACTIVE</div>
     </header>
 
     <main>
@@ -38,11 +33,11 @@
             <p class="hero-sub">The Flagship Protocol. <br><span class="highlight">Total Digital Transformation.</span></p>
         </section>
 
-        <!-- INTEL TERMINAL -->
+        <!-- INTEL TERMINAL (FIXED) -->
         <section class="terminal-wrapper">
             <div class="terminal-header">
-                <div class="tab active" onclick="switchTab('plain', this)">STRATEGY</div>
-                <div class="tab" onclick="switchTab('tech', this)">TECHNICAL</div>
+                <div class="tab active" id="tab-plain">STRATEGY</div>
+                <div class="tab" id="tab-tech">TECHNICAL</div>
             </div>
             
             <div id="content-plain" class="terminal-body">
@@ -58,62 +53,63 @@
 
         <!-- ARCHITECTURE SELECTION GRID -->
         <section class="portal-grid">
-            
-            <!-- TIER 1: INITIATE -->
+            <!-- TIER 1 -->
             <div class="portal-card neural-card">
-                <div class="card-header">
-                    <h3>INITIATE</h3>
-                    <span class="price">$1,500</span>
-                </div>
+                <div class="card-header"><h3>INITIATE</h3><span class="price">$1,500</span></div>
                 <div class="card-body">
                     <p class="strategy"><strong>TARGET:</strong> High-Performance Static Portfolio.</p>
-                    <ul class="specs">
-                        <li>Zero-Latency Architecture</li>
-                        <li>Semantic SEO Structure</li>
-                        <li>Mobile-First Physics</li>
-                    </ul>
+                    <ul class="specs"><li>Zero-Latency Architecture</li><li>Semantic SEO Structure</li><li>Mobile-First Physics</li></ul>
                 </div>
                 <a href="initiate.html" class="btn-sector">ENTER ARCHITECTURE</a>
             </div>
 
-            <!-- TIER 2: OPERATOR -->
+            <!-- TIER 2 -->
             <div class="portal-card neural-card highlight-card">
-                <div class="card-header">
-                    <h3>OPERATOR</h3>
-                    <span class="price">$2,500</span>
-                </div>
+                <div class="card-header"><h3>OPERATOR</h3><span class="price">$2,500</span></div>
                 <div class="card-body">
                     <p class="strategy"><strong>TARGET:</strong> 3D Visual Dominance & CMS.</p>
-                    <ul class="specs">
-                        <li style="color:#00f3ff">>> WebGL Liquid Engine</li>
-                        <li>Content Management System</li>
-                        <li>Dynamic Interaction Model</li>
-                    </ul>
+                    <ul class="specs"><li style="color:#00f3ff">>> WebGL Liquid Engine</li><li>Content Management System</li><li>Dynamic Interaction Model</li></ul>
                 </div>
                 <a href="operator.html" class="btn-sector filled">ENTER ARCHITECTURE</a>
             </div>
 
-            <!-- TIER 3: TITAN -->
+            <!-- TIER 3 -->
             <div class="portal-card neural-card">
-                <div class="card-header">
-                    <h3>TITAN</h3>
-                    <span class="price">$5,000+</span>
-                </div>
+                <div class="card-header"><h3>TITAN</h3><span class="price">$5,000+</span></div>
                 <div class="card-body">
                     <p class="strategy"><strong>TARGET:</strong> Autonomous AI Business Systems.</p>
-                    <ul class="specs">
-                        <li>Custom Web Application</li>
-                        <li>AI Agent Integration</li>
-                        <li>Database Sovereignty</li>
-                    </ul>
+                    <ul class="specs"><li>Custom Web Application</li><li>AI Agent Integration</li><li>Database Sovereignty</li></ul>
                 </div>
                 <a href="titan.html" class="btn-sector">ENTER ARCHITECTURE</a>
             </div>
-
         </section>
     </main>
 
     <script src="neural.js"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+        
+        // FIXED TAB LOGIC
+        const tabPlain = document.getElementById('tab-plain');
+        const tabTech = document.getElementById('tab-tech');
+        const contentPlain = document.getElementById('content-plain');
+        const contentTech = document.getElementById('content-tech');
+
+        tabPlain.addEventListener('click', () => {
+            tabPlain.classList.add('active');
+            tabTech.classList.remove('active');
+            contentPlain.style.display = 'block';
+            contentTech.style.display = 'none';
+            gsap.fromTo(contentPlain, {opacity:0, y:10}, {opacity:1, y:0, duration:0.3});
+        });
+
+        tabTech.addEventListener('click', () => {
+            tabTech.classList.add('active');
+            tabPlain.classList.remove('active');
+            contentTech.style.display = 'block';
+            contentPlain.style.display = 'none';
+            gsap.fromTo(contentTech, {opacity:0, y:10}, {opacity:1, y:0, duration:0.3});
+        });
+    </script>
 </body>
 </html>
