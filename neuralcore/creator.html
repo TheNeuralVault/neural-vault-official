@@ -1,4 +1,90 @@
 <!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATOR | Liquid Reality</title>
+    
+    <!-- GOOGLE TAG -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
+    
+    <!-- ASSETS -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="creator.css">
+    
+    <!-- ENGINES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+</head>
+<body>
+
+    <!-- 1. THE PRELOADER (Compiling Shaders) -->
+    <div class="loader">
+        <div class="loader-text">INITIALIZING_NEURAL_LINK...</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- 2. THE WEBGL ENGINE -->
+    <div id="gl"></div>
+
+    <!-- 3. UI LAYER -->
+    <nav class="creator-nav">
+        <div class="brand">MAGNUS_OPUS</div>
+        <a href="index.html" class="exit-link">DISCONNECT</a>
+    </nav>
+
+    <!-- 4. SCROLL CONTENT (Syncs with WebGL) -->
+    <main>
+        <section class="hero">
+            <h1 class="glitch-title">VISUAL<br>SYNTHESIS</h1>
+            <p class="hero-sub">The boundary between code and reality is liquid.</p>
+        </section>
+
+        <section class="gallery">
+            <!-- These images are hidden but read by Three.js to create textures -->
+            <div class="gallery-item">
+                <div class="gallery-item-img">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000" alt="" crossorigin="anonymous">
+                </div>
+                <div class="gallery-item-text">
+                    <h2>01 // NEURAL_ARCH</h2>
+                    <p>AI Symbiosis</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-item-img">
+                    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000" alt="" crossorigin="anonymous">
+                </div>
+                <div class="gallery-item-text">
+                    <h2>02 // VOID_WALKER</h2>
+                    <p>Cinematic Reality</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-item-img">
+                    <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000" alt="" crossorigin="anonymous">
+                </div>
+                <div class="gallery-item-text">
+                    <h2>03 // CHROME_HEART</h2>
+                    <p>Algorithmic Art</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer">
+            <h2>READY TO<br>ASCEND?</h2>
+            <a href="https://buy.stripe.com/7sY7sL8dib6SbuvbPt8g001" class="purchase-btn">ACQUIRE TEMPLATE ($2,500)</a>
+        </section>
+    </main>
+
+    <script src="creator.js"></script>
+</body>
+</html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
