@@ -2,42 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATOR | The Nexus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CREATOR | The Summoner</title>
     
     <!-- GOOGLE TAG -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1PCVNCCE4"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P1PCVNCCE4');</script>
     
-    <!-- ASSETS -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="creator.css">
     
-    <!-- ENGINES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
-    <!-- 1. THE FLUID REALITY ENGINE (WebGL Background) -->
+    <!-- 1. FALLBACK BACKGROUND (Visible if WebGL fails) -->
+    <div class="static-bg"></div>
+
+    <!-- 2. WEBGL ENGINE -->
     <div id="gl-viewport"></div>
 
-    <!-- 2. THE INTERFACE LAYER -->
+    <!-- 3. NAVIGATION -->
     <nav class="nexus-nav">
         <div class="brand-sig">MAGNUS_OPUS</div>
-        <div class="nav-links">
-            <a href="#work" class="nav-link">ARTIFACTS</a>
-            <a href="#vision" class="nav-link">VISION</a>
-            <a href="index.html" class="nav-link exit">EXIT_SYSTEM</a>
-        </div>
+        <a href="index.html" class="nav-link exit">EXIT</a>
     </nav>
 
-    <!-- 3. THE SCROLL NARRATIVE -->
+    <!-- 4. SCROLL CONTENT -->
     <main class="scroll-container">
         
-        <!-- HERO: THE IDENTITY -->
+        <!-- HERO -->
         <section class="section hero">
             <div class="hero-content">
                 <div class="label">ARCHITECT_OF_THE_IMPOSSIBLE</div>
@@ -46,52 +42,8 @@
             </div>
         </section>
 
-        <!-- WORK: THE ARTIFACTS (Liquid Gallery) -->
-        <section id="work" class="section gallery">
-            <div class="gallery-track">
-                
-                <!-- Project 1 -->
-                <div class="artifact-card">
-                    <div class="artifact-id">01</div>
-                    <div class="artifact-visual">
-                        <!-- Image injected via WebGL, this is for layout/SEO -->
-                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000" alt="Neural Architecture" class="gl-image">
-                    </div>
-                    <div class="artifact-meta">
-                        <h2>NEURAL_ARCH</h2>
-                        <p>AI/Human Symbiosis</p>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="artifact-card right">
-                    <div class="artifact-id">02</div>
-                    <div class="artifact-visual">
-                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000" alt="Void Walker" class="gl-image">
-                    </div>
-                    <div class="artifact-meta">
-                        <h2>VOID_WALKER</h2>
-                        <p>Cinematic Reality</p>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="artifact-card">
-                    <div class="artifact-id">03</div>
-                    <div class="artifact-visual">
-                        <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000" alt="Synthetic Soul" class="gl-image">
-                    </div>
-                    <div class="artifact-meta">
-                        <h2>SYNTH_SOUL</h2>
-                        <p>Algorithmic Art</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- VISION: THE MANIFESTO -->
-        <section id="vision" class="section manifesto">
+        <!-- MANIFESTO -->
+        <section class="section manifesto">
             <div class="text-block">
                 <p class="large-statement">
                     We stand at the threshold of a new epoch. Code is no longer a tool—it is the next step in sentient evolution.
@@ -103,7 +55,31 @@
             </div>
         </section>
 
-        <!-- CTA: THE UPLINK -->
+        <!-- GALLERY (The Evidence) -->
+        <section class="section gallery">
+            <div class="artifact-card">
+                <div class="artifact-meta">
+                    <h2>NEURAL_ARCH</h2>
+                    <p>AI/Human Symbiosis</p>
+                </div>
+                <div class="artifact-visual">
+                    <!-- Image for WebGL to grab -->
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000" class="gl-image" crossorigin="anonymous">
+                </div>
+            </div>
+
+            <div class="artifact-card">
+                <div class="artifact-meta">
+                    <h2>VOID_WALKER</h2>
+                    <p>Cinematic Reality</p>
+                </div>
+                <div class="artifact-visual">
+                    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000" class="gl-image" crossorigin="anonymous">
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
         <section class="section uplink">
             <div class="uplink-container">
                 <h2>INITIATE<br>COLLABORATION</h2>
@@ -113,28 +89,6 @@
 
     </main>
 
-    <!-- 4. MODAL (Hidden by default) -->
-    <div class="modal-backdrop" id="modal">
-        <div class="modal-frame">
-            <div class="modal-header">
-                <h3>SECURE_ASSET</h3>
-                <div class="close-icon" id="closeModal">×</div>
-            </div>
-            <form action="https://formspree.io/f/mblndgrz" method="POST">
-                <input type="hidden" name="product" value="CREATOR_NEXUS">
-                <div class="input-group">
-                    <label>IDENTITY</label>
-                    <input type="text" name="name" required>
-                </div>
-                <div class="input-group">
-                    <label>UPLINK</label>
-                    <input type="email" name="email" required>
-                </div>
-                <button class="nexus-btn full">EXECUTE</button>
-            </form>
-        </div>
-    </div>
-
     <script src="creator.js"></script>
 </body>
-    </html>
+</html>
