@@ -9,7 +9,7 @@ class NexusEngine {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 600;
         
-        // Calculate FOV to match DOM pixels
+        // FOV Calc
         this.camera.fov = 2 * Math.atan((window.innerHeight / 2) / 600) * (180 / Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -29,66 +29,64 @@ class NexusEngine {
 
     setupScene() {
         const loader = new THREE.TextureLoader();
+        // IMPORTANT: Fixes Cross-Origin issues on mobile
+        loader.setCrossOrigin('anonymous');
 
         this.images.forEach((img) => {
-            // Load texture with CORS safety
-            const texture = loader.load(img.src);
-            const geometry = new THREE.PlaneGeometry(1, 1, 20, 20); 
-            
-            const material = new THREE.ShaderMaterial({
-                uniforms: {
-                    uTexture: { value: texture },
-                    uOffset: { value: new THREE.Vector2(0, 0) },
-                    uAlpha: { value: 1 }
-                },
-                vertexShader: `
-                    uniform vec2 uOffset;
-                    varying vec2 vUv;
-                    void main() {
-                        vUv = uv;
-                        vec3 newPosition = position;
-                        // WARP: Bend Y based on X sine wave
-                        newPosition.y += sin(uv.x * 3.14) * uOffset.y * 1.0;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform sampler2D uTexture;
-                    varying vec2 vUv;
-                    void main() {
-                        gl_FragColor = texture2D(uTexture, vUv);
-                    }
-                `,
-                transparent: true
-            });
+            // Load texture
+            loader.load(img.src, (texture) => {
+                // SUCCESS: Texture loaded
+                const geometry = new THREE.PlaneGeometry(1, 1, 20, 20); 
+                const material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        uTexture: { value: texture },
+                        uOffset: { value: new THREE.Vector2(0, 0) },
+                        uAlpha: { value: 1 }
+                    },
+                    vertexShader: `
+                        precision highp float;
+                        uniform vec2 uOffset;
+                        varying vec2 vUv;
+                        void main() {
+                            vUv = uv;
+                            vec3 newPosition = position;
+                            newPosition.y += sin(uv.x * 3.14) * uOffset.y * 1.0;
+                            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+                        }
+                    `,
+                    fragmentShader: `
+                        precision highp float;
+                        uniform sampler2D uTexture;
+                        varying vec2 vUv;
+                        void main() {
+                            gl_FragColor = texture2D(uTexture, vUv);
+                        }
+                    `,
+                    transparent: true
+                });
 
-            const mesh = new THREE.Mesh(geometry, material);
-            this.scene.add(mesh);
-            this.meshItems.push({ mesh, img });
+                const mesh = new THREE.Mesh(geometry, material);
+                this.scene.add(mesh);
+                this.meshItems.push({ mesh, img });
+                
+                // Activate WebGL Mode (Hides standard images)
+                document.body.classList.add('webgl-active');
+            });
         });
     }
 
     syncPositions() {
         this.meshItems.forEach(({ mesh, img }) => {
             const bounds = img.getBoundingClientRect();
-            
-            // 1. Update Scale
             mesh.scale.set(bounds.width, bounds.height, 1);
-            
-            // 2. Update Position (Center of screen is 0,0)
             mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
             mesh.position.y = -bounds.top + window.innerHeight / 2 - bounds.height / 2;
         });
     }
 
     initScroll() {
-        this.lenis = new Lenis({
-            duration: 1.2,
-            smooth: true
-        });
-
+        this.lenis = new Lenis({ duration: 1.2, smooth: true });
         this.lenis.on('scroll', (e) => {
-            // Send velocity to shader
             this.meshItems.forEach(({ mesh }) => {
                 mesh.material.uniforms.uOffset.value.y = e.velocity * 0.05;
             });
