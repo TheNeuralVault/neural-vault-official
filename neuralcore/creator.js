@@ -1,24 +1,11 @@
-// /// CREATOR: THE NEXUS ENGINE ///
+// /// CREATOR: LIQUID CHROMATIC ENGINE ///
 
-class NexusEngine {
+class LiquidGallery {
     constructor() {
-        // 1. MOBILE CHECK (The Safety Valve)
-        if (window.innerWidth < 1024) {
-            console.log("/// MOBILE DETECTED: ENGAGING CSS PHYSICS");
-            this.initScroll(); // Still run smooth scroll
-            return; // STOP WebGL execution
-        }
-
-        console.log("/// DESKTOP DETECTED: ENGAGING LIQUID ENGINE");
-        
-        this.container = document.getElementById('gl-viewport');
-        if (!this.container) return;
-
+        this.container = document.getElementById('gl');
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 600;
-        
-        // FOV Calc to match DOM pixels exactly
         this.camera.fov = 2 * Math.atan((window.innerHeight / 2) / 600) * (180 / Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -26,48 +13,72 @@ class NexusEngine {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.container.appendChild(this.renderer.domElement);
 
-        this.images = [...document.querySelectorAll('.gl-image')];
+        this.clock = new THREE.Clock();
+        this.scroll = { current: 0, target: 0, last: 0, speed: 0 };
         this.meshItems = [];
-        
-        this.setupScene();
+
+        this.initImages();
         this.initScroll();
-        this.animate();
+        this.resize();
         
         window.addEventListener('resize', () => this.resize());
+        
+        // Start Loop
+        this.render();
     }
 
-    setupScene() {
+    initImages() {
+        const images = [...document.querySelectorAll('img')];
         const loader = new THREE.TextureLoader();
-        loader.setCrossOrigin('anonymous'); // Critical for external images
+        loader.setCrossOrigin('anonymous');
 
-        this.images.forEach((img) => {
-            // Load texture
+        // Preload Logic
+        let loadedCount = 0;
+        const total = images.length;
+        const loaderBar = document.querySelector('.loader-bar');
+
+        images.forEach((img, index) => {
             loader.load(img.src, (texture) => {
-                const geometry = new THREE.PlaneGeometry(1, 1, 20, 20); 
+                loadedCount++;
+                loaderBar.style.width = `${(loadedCount / total) * 100}%`;
+                
+                if(loadedCount === total) {
+                    document.body.classList.add('loaded');
+                }
+
+                const geometry = new THREE.PlaneGeometry(1, 1, 20, 20);
                 const material = new THREE.ShaderMaterial({
                     uniforms: {
+                        uTime: { value: 0 },
                         uTexture: { value: texture },
                         uOffset: { value: new THREE.Vector2(0, 0) },
                         uAlpha: { value: 1 }
                     },
+                    // VERTEX SHADER: WARPS GEOMETRY
                     vertexShader: `
-                        precision highp float;
                         uniform vec2 uOffset;
                         varying vec2 vUv;
                         void main() {
                             vUv = uv;
                             vec3 newPosition = position;
-                            // LIQUID WARP ALGORITHM
-                            newPosition.y += sin(uv.x * 3.14) * uOffset.y * 1.0;
+                            // Algorithmic Wave Distortion
+                            newPosition.x += sin(uv.y * 3.14) * uOffset.x * 0.5;
+                            newPosition.y += sin(uv.x * 3.14) * uOffset.y * 0.5;
                             gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
                         }
                     `,
+                    // FRAGMENT SHADER: CHROMATIC ABERRATION
                     fragmentShader: `
-                        precision highp float;
                         uniform sampler2D uTexture;
+                        uniform vec2 uOffset;
                         varying vec2 vUv;
+
                         void main() {
-                            gl_FragColor = texture2D(uTexture, vUv);
+                            // RGB Split based on velocity
+                            float r = texture2D(uTexture, vUv + uOffset * 0.02).r;
+                            float g = texture2D(uTexture, vUv).g;
+                            float b = texture2D(uTexture, vUv - uOffset * 0.02).b;
+                            gl_FragColor = vec4(r, g, b, 1.0);
                         }
                     `,
                     transparent: true
@@ -75,47 +86,54 @@ class NexusEngine {
 
                 const mesh = new THREE.Mesh(geometry, material);
                 this.scene.add(mesh);
-                this.meshItems.push({ mesh, img });
                 
-                // Only hide DOM images if WebGL loads successfully
-                document.body.classList.add('webgl-active');
+                this.meshItems.push({
+                    mesh,
+                    img,
+                    material
+                });
             });
         });
     }
 
-    syncPositions() {
-        this.meshItems.forEach(({ mesh, img }) => {
+    initScroll() {
+        this.lenis = new Lenis({ duration: 1.2, smooth: true });
+        this.lenis.on('scroll', (e) => {
+            this.scroll.target = e.scroll;
+        });
+    }
+
+    updateMeshes() {
+        this.meshItems.forEach(({ mesh, img, material }) => {
             const bounds = img.getBoundingClientRect();
+            
+            // Sync Size
             mesh.scale.set(bounds.width, bounds.height, 1);
+            
+            // Sync Position
             mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
             mesh.position.y = -bounds.top + window.innerHeight / 2 - bounds.height / 2;
+
+            // Pass Velocity to Shader
+            material.uniforms.uOffset.value.set(
+                0, 
+                (this.scroll.current - this.scroll.last) * 0.05
+            );
         });
     }
 
-    initScroll() {
-        this.lenis = new Lenis({
-            duration: 1.2,
-            smooth: true
-        });
-
-        this.lenis.on('scroll', (e) => {
-            // Only update shader if meshes exist
-            if (this.meshItems.length > 0) {
-                this.meshItems.forEach(({ mesh }) => {
-                    mesh.material.uniforms.uOffset.value.y = e.velocity * 0.05;
-                });
-            }
-        });
-    }
-
-    animate() {
-        requestAnimationFrame(() => this.animate());
+    render() {
+        // Physics Loop
+        this.scroll.current = this.lenis.scroll;
+        this.scroll.speed = this.scroll.current - this.scroll.last;
+        
+        this.updateMeshes();
+        this.renderer.render(this.scene, this.camera);
+        
+        this.scroll.last = this.scroll.current;
         this.lenis.raf(Date.now());
         
-        if (this.meshItems.length > 0) {
-            this.syncPositions();
-            this.renderer.render(this.scene, this.camera);
-        }
+        requestAnimationFrame(() => this.render());
     }
 
     resize() {
@@ -126,31 +144,6 @@ class NexusEngine {
     }
 }
 
-// --- BOOT ---
 window.onload = () => {
-    new NexusEngine();
-    
-    // UI LOGIC (Works on Mobile & Desktop)
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('closeModal');
-    
-    document.querySelectorAll('.nexus-btn').forEach(btn => {
-        if(btn.tagName === 'BUTTON' || btn.getAttribute('href').startsWith('#')) {
-             btn.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 modal.style.display = 'flex';
-                 if(window.gsap) gsap.fromTo(".modal-frame", {y: 50, opacity: 0}, {y: 0, opacity: 1, duration: 0.4});
-             });
-        }
-    });
-
-    if(closeBtn) {
-        closeBtn.onclick = () => {
-            if(window.gsap) {
-                gsap.to(".modal-frame", {y: 50, opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none'});
-            } else {
-                modal.style.display = 'none';
-            }
-        };
-    }
+    new LiquidGallery();
 };
