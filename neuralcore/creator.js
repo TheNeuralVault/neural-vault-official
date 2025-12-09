@@ -2,6 +2,15 @@
 
 class NexusEngine {
     constructor() {
+        // 1. MOBILE CHECK (The Safety Valve)
+        if (window.innerWidth < 1024) {
+            console.log("/// MOBILE DETECTED: ENGAGING CSS PHYSICS");
+            this.initScroll(); // Still run smooth scroll
+            return; // STOP WebGL execution
+        }
+
+        console.log("/// DESKTOP DETECTED: ENGAGING LIQUID ENGINE");
+        
         this.container = document.getElementById('gl-viewport');
         if (!this.container) return;
 
@@ -9,7 +18,7 @@ class NexusEngine {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 600;
         
-        // FOV Calc
+        // FOV Calc to match DOM pixels exactly
         this.camera.fov = 2 * Math.atan((window.innerHeight / 2) / 600) * (180 / Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -29,13 +38,11 @@ class NexusEngine {
 
     setupScene() {
         const loader = new THREE.TextureLoader();
-        // IMPORTANT: Fixes Cross-Origin issues on mobile
-        loader.setCrossOrigin('anonymous');
+        loader.setCrossOrigin('anonymous'); // Critical for external images
 
         this.images.forEach((img) => {
             // Load texture
             loader.load(img.src, (texture) => {
-                // SUCCESS: Texture loaded
                 const geometry = new THREE.PlaneGeometry(1, 1, 20, 20); 
                 const material = new THREE.ShaderMaterial({
                     uniforms: {
@@ -50,6 +57,7 @@ class NexusEngine {
                         void main() {
                             vUv = uv;
                             vec3 newPosition = position;
+                            // LIQUID WARP ALGORITHM
                             newPosition.y += sin(uv.x * 3.14) * uOffset.y * 1.0;
                             gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
                         }
@@ -69,7 +77,7 @@ class NexusEngine {
                 this.scene.add(mesh);
                 this.meshItems.push({ mesh, img });
                 
-                // Activate WebGL Mode (Hides standard images)
+                // Only hide DOM images if WebGL loads successfully
                 document.body.classList.add('webgl-active');
             });
         });
@@ -85,19 +93,29 @@ class NexusEngine {
     }
 
     initScroll() {
-        this.lenis = new Lenis({ duration: 1.2, smooth: true });
+        this.lenis = new Lenis({
+            duration: 1.2,
+            smooth: true
+        });
+
         this.lenis.on('scroll', (e) => {
-            this.meshItems.forEach(({ mesh }) => {
-                mesh.material.uniforms.uOffset.value.y = e.velocity * 0.05;
-            });
+            // Only update shader if meshes exist
+            if (this.meshItems.length > 0) {
+                this.meshItems.forEach(({ mesh }) => {
+                    mesh.material.uniforms.uOffset.value.y = e.velocity * 0.05;
+                });
+            }
         });
     }
 
     animate() {
         requestAnimationFrame(() => this.animate());
         this.lenis.raf(Date.now());
-        this.syncPositions();
-        this.renderer.render(this.scene, this.camera);
+        
+        if (this.meshItems.length > 0) {
+            this.syncPositions();
+            this.renderer.render(this.scene, this.camera);
+        }
     }
 
     resize() {
@@ -111,4 +129,28 @@ class NexusEngine {
 // --- BOOT ---
 window.onload = () => {
     new NexusEngine();
+    
+    // UI LOGIC (Works on Mobile & Desktop)
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('closeModal');
+    
+    document.querySelectorAll('.nexus-btn').forEach(btn => {
+        if(btn.tagName === 'BUTTON' || btn.getAttribute('href').startsWith('#')) {
+             btn.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 modal.style.display = 'flex';
+                 if(window.gsap) gsap.fromTo(".modal-frame", {y: 50, opacity: 0}, {y: 0, opacity: 1, duration: 0.4});
+             });
+        }
+    });
+
+    if(closeBtn) {
+        closeBtn.onclick = () => {
+            if(window.gsap) {
+                gsap.to(".modal-frame", {y: 50, opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none'});
+            } else {
+                modal.style.display = 'none';
+            }
+        };
+    }
 };
